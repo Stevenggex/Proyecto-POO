@@ -1,0 +1,204 @@
+/* ==========================================================
+   style.css - Estilos modernos para Login.fxml
+   ========================================================== */
+
+* {
+    -fx-accent-color: #2f5ad0;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+.root-pane {
+    -fx-background-color: linear-gradient(to bottom right, #eef1f8, #e3e8f3);
+}
+
+/* ---------- HEADER ---------- */
+
+.header-icon-badge {
+    -fx-background-color: #2f5ad0;
+    -fx-background-radius: 14;
+    -fx-min-width: 52;
+    -fx-min-height: 52;
+    -fx-max-width: 52;
+    -fx-max-height: 52;
+    -fx-effect: dropshadow(gaussian, rgba(47,90,208,0.45), 14, 0, 0, 4);
+}
+
+.header-icon {
+    -fx-fill: white;
+    -fx-scale-x: 0.85;
+    -fx-scale-y: 0.85;
+}
+
+.title-text {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #22315c;
+}
+
+.subtitle-text {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #7c86a1;
+}
+
+/* ---------- CARD ---------- */
+
+.login-card {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 16;
+    -fx-effect: dropshadow(gaussian, rgba(30,40,80,0.15), 30, 0, 0, 12);
+}
+
+.section-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #9099b0;
+}
+
+.field-label {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #4a5372;
+    -fx-font-weight: bold;
+}
+
+.forgot-link {
+    -fx-font-size: 11.5px;
+    -fx-text-fill: #2f5ad0;
+    -fx-border-color: transparent;
+    -fx-underline: false;
+}
+
+.forgot-link:hover {
+    -fx-text-fill: #1f3f9e;
+    -fx-underline: true;
+}
+
+/* ---------- ROLE TOGGLE CARDS ---------- */
+
+.role-toggle {
+    -fx-background-color: #f7f8fb;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-color: #e3e6ef;
+    -fx-border-width: 1.5;
+    -fx-padding: 12 6 12 6;
+    -fx-cursor: hand;
+}
+
+.role-toggle .role-icon {
+    -fx-fill: #9099b0;
+}
+
+.role-toggle .role-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6b7490;
+}
+
+.role-toggle:hover {
+    -fx-background-color: #eef1f8;
+    -fx-border-color: #c7d0e8;
+}
+
+.role-toggle:selected {
+    -fx-background-color: #eaf0ff;
+    -fx-border-color: #2f5ad0;
+}
+
+.role-toggle:selected .role-icon {
+    -fx-fill: #2f5ad0;
+}
+
+.role-toggle:selected .role-label {
+    -fx-text-fill: #2f5ad0;
+}
+
+/* ---------- INPUT FIELDS ---------- */
+
+.input-wrapper {
+    -fx-background-color: #f7f8fb;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #e3e6ef;
+    -fx-border-width: 1.5;
+    -fx-padding: 4 10 4 10;
+}
+
+.input-wrapper:hover {
+    -fx-border-color: #c7d0e8;
+}
+
+.input-icon {
+    -fx-fill: #9099b0;
+    -fx-scale-x: 0.8;
+    -fx-scale-y: 0.8;
+}
+
+.borderless-input {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 13px;
+    -fx-text-fill: #22315c;
+    -fx-padding: 8 4 8 4;
+    -fx-highlight-fill: #cdd9ff;
+}
+
+.borderless-input:focused {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.icon-toggle-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 4;
+    -fx-cursor: hand;
+}
+
+.icon-toggle-button:hover .input-icon {
+    -fx-fill: #2f5ad0;
+}
+
+/* ---------- ERROR MESSAGE ---------- */
+
+.error-label {
+    -fx-text-fill: #d33333;
+    -fx-font-size: 11.5px;
+    -fx-font-weight: bold;
+    -fx-background-color: #fdeaea;
+    -fx-background-radius: 6;
+    -fx-padding: 8 10 8 10;
+}
+
+/* ---------- PRIMARY BUTTON ---------- */
+
+.primary-button {
+    -fx-background-color: linear-gradient(to right, #2f5ad0, #274bb5);
+    -fx-background-radius: 8;
+    -fx-padding: 12 20 12 20;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(47,90,208,0.4), 14, 0, 0, 6);
+}
+
+.primary-button:hover {
+    -fx-background-color: linear-gradient(to right, #274bb5, #1f3f9e);
+}
+
+.primary-button:pressed {
+    -fx-background-color: #1f3f9e;
+}
+
+.primary-button-text {
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.button-arrow-icon {
+    -fx-fill: transparent;
+    -fx-stroke: white;
+    -fx-stroke-width: 2;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+    -fx-scale-x: 0.75;
+    -fx-scale-y: 0.75;
+}

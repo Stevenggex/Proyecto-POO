@@ -66,10 +66,28 @@ public class LoginController {
     }
 
     private Rol autenticar(String usuario, String password) {
-        if (usuario.equals("admin") && password.equals("1234")) return Rol.ADMINISTRADOR;
-        if (usuario.equals("empleado") && password.equals("1234")) return Rol.EMPLEADO;
-        if (usuario.equals("usuario") && password.equals("1234")) return Rol.USUARIO;
-        return null;
+        try {
+            Firestore db = FirebaseConfig.getDb();
+            var future = db.collection("usuarios")
+                    .whereEqualTo("usuario", usuario)
+                    .whereEqualTo("password", password)
+                    .get();
+
+            var documents = future.get().getDocuments();
+            if (documents.isEmpty()) return null;
+
+            String rol = documents.get(0).getString("rol");
+            return switch (rol) {
+                case "Administrador" -> Rol.ADMINISTRADOR;
+                case "Empleado" -> Rol.EMPLEADO;
+                case "Usuario" -> Rol.USUARIO;
+                default -> null;
+            };
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarError("Error al conectar con Firebase: " + e.getMessage());
+            return null;
+        }
     }
 
     @FXML

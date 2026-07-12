@@ -1,0 +1,61 @@
+========================================
+  PLAN DE IMPLEMENTACION
+  Proyecto POO - Tienda de Videojuegos
+========================================
+
+ARQUITECTURA:
+  JavaFX (.exe)  -->  Firebase Firestore  <--  React Frontend (Vercel/local)
+  CRUD completo       (base de datos)         Solo lectura
+
+----------------------------------------
+PASO 1: Alinear modelos de datos
+----------------------------------------
+- Tomar campos existentes del Videojuego.java: id, nombre, precio, cantidad, descripcion, imagenPath
+- Agregar campos minimos al modelo: genero, plataformas, desarrollador
+- Actualizar VideojuegoDAO para que devuelva los campos correctos
+- Adaptar los tipos TypeScript del frontend para que coincidan
+
+----------------------------------------
+PASO 2: Implementar VideojuegoDAO con Firestore
+----------------------------------------
+- Usar la instancia de Firestore de FirebaseConfig
+- Implementar crear(): agregar documento a coleccion "videojuegos"
+- Implementar listarTodos(): leer toda la coleccion
+- Implementar buscarPorId(): buscar por ID de documento
+- Implementar actualizar(): actualizar campos de un documento
+- Implementar eliminar(): borrar documento
+
+----------------------------------------
+PASO 3: Conectar controllers JavaFX a Firestore
+----------------------------------------
+- DashboardController: reemplazar ArrayList en memoria por VideojuegoDAO
+- CompraController: cargar catalogo desde Firestore en vez de datos hardcodeados
+- AdminController: conectar stubs a Firestore
+
+----------------------------------------
+PASO 4: Configurar Firebase en el frontend React
+--------------------------------========
+- Instalar firebase SDK en package.json
+- Crear archivo de configuracion firebase.ts con credenciales del proyecto
+- Crear servicio/hook para hacer fetch de coleccion "videojuegos"
+- Reemplazar datos hardcodeados de data/games.ts
+
+----------------------------------------
+PASO 5: Limpiar el proyecto React
+----------------------------------------
+- Quitar plugins de Figma del vite.config.ts (no funcionan fuera de Figma Make)
+- Verificar que pnpm dev funciona sin errores
+
+----------------------------------------
+PASO 6: Verificar que el .exe funcione
+----------------------------------------
+- mvn clean package genera el ejecutable
+- Al abrir, conecta a Firestore y puede hacer CRUD
+
+----------------------------------------
+PASO 7: Probar end-to-end
+----------------------------------------
+1. Abrir JavaFX, registrar videojuego nuevo
+2. Abrir frontend en navegador, verificar que aparece
+3. Editar/eliminar desde JavaFX, verificar que se refleja
+4. Probar filtros y busqueda en el frontend

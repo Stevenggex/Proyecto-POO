@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="768.0" prefWidth="1280.0" stylesheets="/Estilos/style-dashboard.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.backend.CompraController">
+<BorderPane prefHeight="768.0" prefWidth="1280.0" stylesheets="/Estilos/style-dashboard.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelo.CompraController">
 
     <left>
         <VBox prefWidth="220.0" spacing="12.0" styleClass="sidebar">
@@ -19,8 +19,8 @@
                     <font><Font size="11.0" /></font>
                 </Label>
                 <Separator opacity="0.3" />
-                <Button maxWidth="1.7976931348623157E308" prefHeight="38.0" styleClass="nav-button" text="Catalogo" />
-                <Button maxWidth="1.7976931348623157E308" prefHeight="38.0" styleClass="nav-button" text="Mis Compras" />
+                <Button maxWidth="1.7976931348623157E308" onAction="#handleCatalogo" prefHeight="38.0" styleClass="nav-button" text="Catalogo" />
+                <Button maxWidth="1.7976931348623157E308" onAction="#handleMisCompras" prefHeight="38.0" styleClass="nav-button" text="Mis Compras" />
                 <VBox alignment="BOTTOM_CENTER" VBox.vgrow="ALWAYS">
                     <Button maxWidth="1.7976931348623157E308" onAction="#handleLogout" prefHeight="38.0" styleClass="nav-button" text="Cerrar Sesion" />
                 </VBox>
@@ -61,32 +61,6 @@
                                                 <ColumnConstraints />
                                             </columnConstraints>
                                             <rowConstraints><RowConstraints /></rowConstraints>
-
-                                            <VBox prefWidth="240.0" spacing="8.0" styleClass="game-card" GridPane.columnIndex="0" GridPane.rowIndex="0">
-                                                <padding><Insets bottom="12.0" left="12.0" right="12.0" top="12.0" /></padding>
-                                                <children>
-                                                    <HBox alignment="CENTER" prefHeight="100.0" style="-fx-background-color: #171f33; -fx-background-radius: 8px;">
-                                                        <Label text="🎮" style="-fx-font-size: 36px;" />
-                                                    </HBox>
-                                                    <Label style="-fx-font-weight: bold;" styleClass="text-white" text="Void Hunter" />
-                                                    <Label styleClass="text-secondary-color" text="59.99" />
-                                                    <Label styleClass="text-muted" text="Stock: 142" />
-                                                    <Button maxWidth="1.7976931348623157E308" prefHeight="32.0" styleClass="btn-primary-neon" text="+ Agregar" />
-                                                </children>
-                                            </VBox>
-
-                                            <VBox prefWidth="240.0" spacing="8.0" styleClass="game-card" GridPane.columnIndex="1" GridPane.rowIndex="0">
-                                                <padding><Insets bottom="12.0" left="12.0" right="12.0" top="12.0" /></padding>
-                                                <children>
-                                                    <HBox alignment="CENTER" prefHeight="100.0" style="-fx-background-color: #171f33; -fx-background-radius: 8px;">
-                                                        <Label text="🎮" style="-fx-font-size: 36px;" />
-                                                    </HBox>
-                                                    <Label style="-fx-font-weight: bold;" styleClass="text-white" text="Neon Katana" />
-                                                    <Label styleClass="text-secondary-color" text="34.50" />
-                                                    <Label styleClass="text-muted" text="Stock: 0" />
-                                                    <Button maxWidth="1.7976931348623157E308" prefHeight="32.0" styleClass="btn-primary-neon" text="+ Agregar" />
-                                                </children>
-                                            </VBox>
 
                                         </GridPane>
                                     </content>

@@ -5,17 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e8d02c0-ea6c-43c3-9b27-13f0afe41880" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/modelo/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/backend/CompraController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/Estilos/style-dashboard.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/Dashboard.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/Login.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Rol.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Rol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/HelloApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/backend/HelloApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CrudOperaciones.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/CrudOperaciones.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/dao/VideojuegoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/VideojuegoDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Videojuego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Videojuego.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/CompraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/CompraController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/DashboardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/backend/HelloController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/backend/Launcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/backend/Admin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/Admin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/backend/CompraView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/CompraView.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/backend/Dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/Dashboard.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/backend/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/hello-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/README.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +59,7 @@
     &quot;Application.Launcher.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
@@ -79,7 +85,8 @@
       <updated>1783290529897</updated>
       <workItem from="1783290531229" duration="772000" />
       <workItem from="1783356021895" duration="4798000" />
-      <workItem from="1783361403312" duration="10477000" />
+      <workItem from="1783361403312" duration="11079000" />
+      <workItem from="1783814398397" duration="168000" />
     </task>
     <servers />
   </component>

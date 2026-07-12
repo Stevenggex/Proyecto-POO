@@ -1,4 +1,4 @@
-package org.example.backend;
+package modelo;
 
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -13,10 +13,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import modelo.Videojuego;
+import dao.VideojuegoDAO;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,7 +42,8 @@ public class CompraController {
     @FXML private Label totalLabel;
     @FXML private Button registrarCompraBtn;
 
-    private final List<Videojuego> catalogo = new ArrayList<>();
+    private final VideojuegoDAO dao = new VideojuegoDAO();
+    private List<Videojuego> catalogo;
     private final ObservableList<LineaFactura> facturaItems = FXCollections.observableArrayList();
     private double totalCompra = 0;
 
@@ -53,17 +58,7 @@ public class CompraController {
 
         facturaTable.setItems(facturaItems);
 
-        catalogo.add(new Videojuego("Void Hunter: Genesis", 59.99, 142, "Deep-space extraction RPG", ""));
-        catalogo.add(new Videojuego("Neon Katana", 34.50, 0, "Fast-paced cyber-slasher", ""));
-        catalogo.add(new Videojuego("Stellar Drift", 45.00, 88, "Open-world space exploration", ""));
-        catalogo.add(new Videojuego("Pixel Kingdoms", 19.99, 230, "Retro-style strategy game", ""));
-        catalogo.add(new Videojuego("Echoes of the Void", 79.99, 55, "Horror adventure", ""));
-        catalogo.add(new Videojuego("Factory Tycoon", 24.99, 120, "Build and manage your factory", ""));
-
-        for (int i = 0; i < catalogo.size(); i++) {
-            catalogo.get(i).setId(i + 1);
-        }
-
+        catalogo = dao.listarTodos();
         poblarGrid(catalogo);
 
         searchField.textProperty().addListener((obs, old, val) -> {
@@ -175,20 +170,12 @@ public class CompraController {
         String pago = pagoCombo.getValue();
 
         if (nombre.isEmpty() || direccion.isEmpty() || correo.isEmpty() || telefono.isEmpty() || pago == null) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Campos incompletos");
-            alert.setHeaderText(null);
-            alert.setContentText("Complete todos los datos del cliente y seleccione un método de pago.");
-            alert.showAndWait();
+            mostrarAlerta("Campos incompletos", "Complete todos los datos del cliente y seleccione un metodo de pago.", Alert.AlertType.ERROR);
             return;
         }
 
         if (facturaItems.isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Carrito vacío");
-            alert.setHeaderText(null);
-            alert.setContentText("Agregue al menos un producto a la factura.");
-            alert.showAndWait();
+            mostrarAlerta("Carrito vacio", "Agregue al menos un producto a la factura.", Alert.AlertType.ERROR);
             return;
         }
 
@@ -214,6 +201,9 @@ public class CompraController {
         System.out.printf("TOTAL:              $%.2f\n", totalCompra);
         System.out.println("=================================");
 
+        guardarEnArchivo(nombre, telefono, direccion, correo, pago);
+
+        mostrarAlerta("Exito", "Compra registrada correctamente.", Alert.AlertType.INFORMATION);
         limpiarFormulario();
     }
 
@@ -228,19 +218,64 @@ public class CompraController {
         totalCompra = 0;
     }
 
+    private void guardarEnArchivo(String nombre, String telefono, String direccion, String correo, String pago) {
+        String fecha = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        StringBuilder sb = new StringBuilder();
+        sb.append("========================================\n");
+        sb.append("Fecha: ").append(fecha).append("\n");
+        sb.append("Cliente: ").append(nombre).append("\n");
+        sb.append("Telefono: ").append(telefono).append("\n");
+        sb.append("Direccion: ").append(direccion).append("\n");
+        sb.append("Correo: ").append(correo).append("\n");
+        sb.append("Metodo de pago: ").append(pago).append("\n");
+        sb.append("----------------------------------------\n");
+        sb.append("Juegos:\n");
+        for (LineaFactura item : facturaItems) {
+            sb.append("  - ").append(item.getProducto())
+              .append(" x").append(item.getCantidad())
+              .append("  $").append(String.format("%.2f", item.getPrecio()))
+              .append("  Subtotal: $").append(String.format("%.2f", item.getSubtotal()))
+              .append("\n");
+        }
+        sb.append("----------------------------------------\n");
+        sb.append("TOTAL: $").append(String.format("%.2f", totalCompra)).append("\n");
+        sb.append("========================================\n\n");
+
+        try {
+            File archivo = new File("Compras.txt");
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(archivo, true))) {
+                writer.write(sb.toString());
+            }
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo guardar el registro de compra.", Alert.AlertType.ERROR);
+        }
+    }
+
     @FXML
     private void handleLogout() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/backend/Login.fxml"));
             Scene loginScene = new Scene(loader.load(), 800, 600);
             Stage stage = (Stage) registrarCompraBtn.getScene().getWindow();
             stage.setScene(loginScene);
-            stage.setTitle("Portal del Sistema - Iniciar Sesión");
+            stage.setTitle("Portal del Sistema - Iniciar Sesion");
             stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleCatalogo() {
+        catalogo = dao.listarTodos();
+        poblarGrid(catalogo);
+        searchField.clear();
+    }
+
+    @FXML
+    private void handleMisCompras() {
+        mostrarAlerta("Mis Compras", "No tiene compras registradas aun.", Alert.AlertType.INFORMATION);
     }
 
     public static class LineaFactura {
@@ -268,5 +303,13 @@ public class CompraController {
         public DoubleProperty precioProperty() { return precio; }
         public double getSubtotal() { return subtotal.get(); }
         public DoubleProperty subtotalProperty() { return subtotal; }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo){
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

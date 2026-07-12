@@ -32,13 +32,13 @@ public class LoginController {
         String passwordTexto = passwordField.getText();
 
         if (usuarioTexto.isEmpty() || passwordTexto.isEmpty()) {
-            mostrarError("Todos los campos son obligatorios.");
+            mostrarAlerta("Advertencia", "Todos los campos son obligatorios.", Alert.AlertType.WARNING);
             return;
         }
 
         Toggle selected = rolToggleGroup.getSelectedToggle();
         if (selected == null) {
-            mostrarError("Debe seleccionar un rol.");
+            mostrarAlerta("Advertencia", "Debe seleccionar un rol.", Alert.AlertType.WARNING);
             return;
         }
 
@@ -46,7 +46,7 @@ public class LoginController {
         Rol rolUsuario = autenticar(usuarioTexto, passwordTexto);
 
         if (rolUsuario == null) {
-            mostrarError("Usuario o contraseña incorrectos.");
+            mostrarAlerta("Error", "Usuario o contrasena incorrectos.", Alert.AlertType.ERROR);
             return;
         }
 
@@ -57,42 +57,25 @@ public class LoginController {
         };
 
         if (!rolSeleccionado.equals(rolEsperado)) {
-            mostrarError("El rol seleccionado no coincide con el usuario.");
+            mostrarAlerta("Error", "El rol seleccionado no coincide con el usuario.", Alert.AlertType.ERROR);
             return;
         }
 
         ocultarError();
+        mostrarAlerta("Bienvenido", "Inicio de sesion exitoso como " + rolEsperado + ".", Alert.AlertType.INFORMATION);
         abrirDashboard(rolUsuario);
     }
 
     private Rol autenticar(String usuario, String password) {
-        try {
-            Firestore db = FirebaseConfig.getDb();
-            var future = db.collection("usuarios")
-                    .whereEqualTo("usuario", usuario)
-                    .whereEqualTo("password", password)
-                    .get();
-
-            var documents = future.get().getDocuments();
-            if (documents.isEmpty()) return null;
-
-            String rol = documents.get(0).getString("rol");
-            return switch (rol) {
-                case "Administrador" -> Rol.ADMINISTRADOR;
-                case "Empleado" -> Rol.EMPLEADO;
-                case "Usuario" -> Rol.USUARIO;
-                default -> null;
-            };
-        } catch (Exception e) {
-            e.printStackTrace();
-            mostrarError("Error al conectar con Firebase: " + e.getMessage());
-            return null;
-        }
+        if (usuario.equals("admin") && password.equals("1234")) return Rol.ADMINISTRADOR;
+        if (usuario.equals("empleado") && password.equals("1234")) return Rol.EMPLEADO;
+        if (usuario.equals("usuario") && password.equals("1234")) return Rol.USUARIO;
+        return null;
     }
 
     @FXML
     private void handleOlvidoContrasena() {
-        mostrarError("Contacte al administrador del sistema para restablecer su contraseña.");
+        mostrarAlerta("Ayuda", "Contacte al administrador del sistema para restablecer su contrasena.", Alert.AlertType.INFORMATION);
     }
 
     private void mostrarError(String mensaje) {
@@ -122,7 +105,15 @@ public class LoginController {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            mostrarError("Error al cargar el panel: " + e.getMessage());
+            mostrarAlerta("Error", "Error al cargar el panel: " + e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo){
+        Alert alerta = new Alert(tipo);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
     }
 }

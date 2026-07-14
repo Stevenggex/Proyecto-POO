@@ -9,26 +9,47 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import dao.VideojuegoDAO;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class AdminController {
 
     @FXML private TextField busquedaField;
+    @FXML private TextField nombreField;
+    @FXML private TextField precioField;
+    @FXML private TextField stockField;
+    @FXML private ComboBox<String> categoriaCombo;
+    @FXML private TextArea descripcionArea;
+    @FXML private Button registrarBtn;
     @FXML private GridPane inventoryGrid;
+    @FXML private VBox imagenDropZone;
+    @FXML private ImageView imagenPreview;
+    @FXML private Label imagenLabel;
+    @FXML private Label formTitle;
+
     @FXML private Button dashboardBtn;
     @FXML private Button inventoryBtn;
     @FXML private Button searchBtn;
     @FXML private Button logoutBtn;
 
     private final VideojuegoDAO dao = new VideojuegoDAO();
+    private String editandoId = null;
+    private String imagenSeleccionadaPath = null;
 
     @FXML
     private void initialize() {
+        categoriaCombo.getItems().addAll("Accion / RPG", "Estrategia", "Simulador", "Terror", "Indie");
+        nombreField.textProperty().addListener((obs, old, val) -> limpiarEstiloError(nombreField));
+        precioField.textProperty().addListener((obs, old, val) -> limpiarEstiloError(precioField));
+        stockField.textProperty().addListener((obs, old, val) -> limpiarEstiloError(stockField));
+
         busquedaField.textProperty().addListener((obs, old, val) -> {
             String filtro = val.toLowerCase().trim();
             if (filtro.isEmpty()) {
@@ -40,7 +61,7 @@ public class AdminController {
         cargarInventario();
     }
 
-    // ==================== INVENTARIO SOLO LECTURA ====================
+    // ==================== INVENTARIO ====================
 
     private void cargarInventario() {
         List<Videojuego> lista = dao.listarTodos();
@@ -66,7 +87,7 @@ public class AdminController {
 
         int row = 0, col = 0;
         for (Videojuego juego : lista) {
-            VBox card = crearCardSoloLectura(juego);
+            VBox card = crearCardConAcciones(juego);
             GridPane.setColumnIndex(card, col);
             GridPane.setRowIndex(card, row);
             inventoryGrid.getChildren().add(card);
@@ -79,7 +100,7 @@ public class AdminController {
         }
     }
 
-    private VBox crearCardSoloLectura(Videojuego juego) {
+    private VBox crearCardConAcciones(Videojuego juego) {
         HBox imagenBox = new HBox();
         imagenBox.setAlignment(Pos.CENTER);
         imagenBox.setPrefHeight(120.0);
@@ -147,23 +168,157 @@ public class AdminController {
         stockBox.setStyle("-fx-border-color: #31394d transparent transparent transparent; -fx-border-width: 1px;");
         stockBox.setPadding(new Insets(8, 0, 0, 0));
 
-        VBox card = new VBox(6, stackPane, nombrePrecio, catLabel, descLabel, stockBox);
+        Button editBtn = new Button("Editar");
+        editBtn.setStyle("-fx-background-color: #7aa2f7; -fx-text-fill: #121826; -fx-font-weight: bold; -fx-background-radius: 6px; -fx-cursor: hand; -fx-font-size: 12px;");
+        editBtn.setPrefHeight(28.0);
+        editBtn.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(editBtn, Priority.ALWAYS);
+        editBtn.setOnAction(e -> editarProducto(juego));
+
+        Button deleteBtn = new Button("Eliminar");
+        deleteBtn.setStyle("-fx-background-color: #ff6b6b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 6px; -fx-cursor: hand; -fx-font-size: 12px;");
+        deleteBtn.setPrefHeight(28.0);
+        deleteBtn.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(deleteBtn, Priority.ALWAYS);
+        deleteBtn.setOnAction(e -> eliminarProducto(juego));
+
+        HBox botonesBox = new HBox(8, editBtn, deleteBtn);
+        botonesBox.setAlignment(Pos.CENTER_LEFT);
+
+        VBox card = new VBox(6, stackPane, nombrePrecio, catLabel, descLabel, stockBox, botonesBox);
         card.setPrefWidth(280.0);
         card.getStyleClass().add("game-card");
         card.setPadding(new Insets(12));
         return card;
     }
 
+    // ==================== EDITAR / ELIMINAR ====================
+
+    private void editarProducto(Videojuego juego) {
+        editandoId = juego.getId();
+        nombreField.setText(juego.getNombre());
+        precioField.setText(String.valueOf(juego.getPrecio()));
+        stockField.setText(String.valueOf(juego.getCantidad()));
+        descripcionArea.setText(juego.getDescripcion());
+        if (juego.getGenero() != null && !juego.getGenero().isEmpty()) {
+            categoriaCombo.setValue(juego.getGenero());
+        }
+        if (juego.getImagenPath() != null && !juego.getImagenPath().isEmpty()) {
+            imagenSeleccionadaPath = juego.getImagenPath();
+            File file = new File(imagenSeleccionadaPath);
+            if (file.exists()) {
+                imagenPreview.setImage(new Image(file.toURI().toString()));
+                imagenPreview.setVisible(true);
+                imagenLabel.setVisible(false);
+            }
+        }
+        formTitle.setText("Editar Producto");
+        registrarBtn.setText("Actualizar Producto");
+        registrarBtn.setDisable(false);
+    }
+
+    @FXML
+    private void handleRegistrar() {
+        if (editandoId == null) return;
+
+        String nombre = nombreField.getText().trim();
+        String precioText = precioField.getText().trim();
+        String stockText = stockField.getText().trim();
+        String descripcion = descripcionArea.getText().trim();
+        String genero = categoriaCombo.getValue();
+
+        boolean valido = true;
+        if (nombre.isEmpty()) { marcarError(nombreField); valido = false; }
+        if (precioText.isEmpty()) { marcarError(precioField); valido = false; }
+        if (stockText.isEmpty()) { marcarError(stockField); valido = false; }
+        if (!valido) return;
+
+        double precio;
+        int stock;
+        try { precio = Double.parseDouble(precioText); } catch (NumberFormatException e) { marcarError(precioField); return; }
+        try { stock = Integer.parseInt(stockText); } catch (NumberFormatException e) { marcarError(stockField); return; }
+
+        Videojuego juego = dao.buscarPorId(editandoId);
+        if (juego == null) {
+            mostrarAlerta("Error", "No se encontro el producto.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        juego.setNombre(nombre);
+        juego.setPrecio(precio);
+        juego.setCantidad(stock);
+        juego.setDescripcion(descripcion);
+        if (genero != null) juego.setGenero(genero);
+        if (imagenSeleccionadaPath != null) juego.setImagenPath(imagenSeleccionadaPath);
+
+        dao.actualizar(juego);
+        editandoId = null;
+        limpiarFormulario();
+        cargarInventario();
+        mostrarAlerta("Exito", "Producto '" + juego.getNombre() + "' actualizado correctamente.", Alert.AlertType.INFORMATION);
+    }
+
+    private void eliminarProducto(Videojuego juego) {
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle("Confirmar eliminacion");
+        confirm.setHeaderText("¿Eliminar '" + juego.getNombre() + "'?");
+        confirm.setContentText("Esta accion no se puede deshacer.");
+
+        confirm.showAndWait().ifPresent(btn -> {
+            if (btn == ButtonType.OK) {
+                dao.eliminar(juego.getId());
+                if (editandoId != null && editandoId.equals(juego.getId())) {
+                    editandoId = null;
+                    limpiarFormulario();
+                }
+                cargarInventario();
+                mostrarAlerta("Exito", "Producto '" + juego.getNombre() + "' eliminado correctamente.", Alert.AlertType.INFORMATION);
+            }
+        });
+    }
+
+    // ==================== IMAGEN ====================
+
+    @FXML
+    private void seleccionarImagen() {
+        if (editandoId == null) return;
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Seleccionar imagen del producto");
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Imagenes", "*.png", "*.jpg", "*.jpeg", "*.gif")
+        );
+
+        File file = fileChooser.showOpenDialog(imagenDropZone.getScene().getWindow());
+        if (file != null) {
+            try {
+                File imagesDir = new File("src/main/resources/images");
+                if (!imagesDir.exists()) imagesDir.mkdirs();
+
+                File dest = new File(imagesDir, System.currentTimeMillis() + "_" + file.getName());
+                Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+                imagenSeleccionadaPath = dest.getAbsolutePath();
+                imagenPreview.setImage(new Image(dest.toURI().toString()));
+                imagenPreview.setVisible(true);
+                imagenLabel.setVisible(false);
+            } catch (IOException e) {
+                mostrarAlerta("Error", "No se pudo cargar la imagen.", Alert.AlertType.ERROR);
+            }
+        }
+    }
+
     // ==================== NAVEGACION ====================
 
     @FXML
     private void handleDashboard() {
-        mostrarAlerta("Panel", "Vista de administracion - Solo lectura.", Alert.AlertType.INFORMATION);
+        mostrarAlerta("Panel", "Vista de administracion.", Alert.AlertType.INFORMATION);
     }
 
     @FXML
     private void handleInventory() {
         busquedaField.clear();
+        limpiarFormulario();
         cargarInventario();
     }
 
@@ -189,6 +344,29 @@ public class AdminController {
     }
 
     // ==================== UTILIDADES ====================
+
+    private void limpiarFormulario() {
+        nombreField.clear();
+        precioField.clear();
+        stockField.clear();
+        descripcionArea.clear();
+        categoriaCombo.getSelectionModel().clearSelection();
+        imagenSeleccionadaPath = null;
+        imagenPreview.setImage(null);
+        imagenPreview.setVisible(false);
+        imagenLabel.setVisible(true);
+        formTitle.setText("Editar Producto");
+        registrarBtn.setText("Actualizar Producto");
+        registrarBtn.setDisable(true);
+    }
+
+    private void marcarError(TextField field) {
+        field.setStyle("-fx-border-color: #ff4444; -fx-border-width: 2px; -fx-border-radius: 8px;");
+    }
+
+    private void limpiarEstiloError(TextField field) {
+        field.setStyle("");
+    }
 
     private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);

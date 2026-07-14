@@ -6,21 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="3e8d02c0-ea6c-43c3-9b27-13f0afe41880" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/CrudOperaciones.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/CrudOperaciones.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dao/VideojuegoDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/dao/VideojuegoDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Videojuego.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Videojuego.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/CompraController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/CompraController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/DashboardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/DashboardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/HelloController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/backend/HelloController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/backend/Launcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/backend/Launcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/backend/Admin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/Admin.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/backend/CompraView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/CompraView.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/backend/Dashboard.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/Dashboard.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/example/backend/hello-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/example/backend/hello-view.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/README.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

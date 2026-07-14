@@ -67,11 +67,32 @@ public class LoginController {
     }
 
     private Rol autenticar(String usuario, String password) {
-        if (usuario.equals("admin") && password.equals("1234")) return Rol.ADMINISTRADOR;
-        if (usuario.equals("empleado") && password.equals("1234")) return Rol.EMPLEADO;
-        if (usuario.equals("usuario") && password.equals("1234")) return Rol.USUARIO;
-        return null;
+        try {
+            Firestore db = FirebaseConfig.getDb();
+            var query = db.collection("usuarios")
+                    .whereEqualTo("usuario", usuario)
+                    .whereEqualTo("password", password)
+                    .get()
+                    .get();
+            if (query.isEmpty()) {
+                return null;
+            }
+            String rol = query.getDocuments().get(0).getString("rol");
+
+            return switch (rol) {
+                case "Administrador" -> Rol.ADMINISTRADOR;
+                case "Empleado" -> Rol.EMPLEADO;
+                case "Usuario" -> Rol.USUARIO;
+                default -> null;
+            };
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "Error al autenticar: " + e.getMessage(), Alert.AlertType.ERROR);
+            return null;
+        }
     }
+
 
     @FXML
     private void handleOlvidoContrasena() {

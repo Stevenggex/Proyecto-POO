@@ -1,31 +1,53 @@
-# Proyecto POO - Tienda de Videojuegos
+# Proyecto POO - QuestLog: Tienda de Videojuegos
 
 Proyecto final de la materia de Programación Orientada a Objetos (POO).
 
-Sistema CRUD de una tienda de videojuegos, compuesto por dos partes dentro de este monorepo:
+## Integrantes
 
-## Estructura
+- Steven Gallo
+- Nicolay Barreno
 
-- `frontend/` → Página web estática que muestra (solo lectura) los videojuegos registrados desde la app de escritorio.
-- `backend/` → Aplicación de escritorio en JavaFX donde se realiza el CRUD completo (crear, leer, actualizar, eliminar) de los videojuegos, conectada a una base de datos PostgreSQL.
+## Estructura del proyecto
+
+- `backend/` — Aplicación de escritorio en JavaFX con Maven que gestiona el CRUD completo de videojuegos, autenticación de usuarios con roles, y registro de compras. Conectada a Firebase Firestore.
+- `diseño-poo/` — Página web en React + Vite + TailwindCSS que muestra el catálogo de videojuegos (solo lectura) y permite registro/inicio de sesión.
+- `database/` — Script SQL de la base de datos PostgreSQL (modelo relacional).
 
 ## Tecnologías
 
 | Parte     | Herramientas |
 |-----------|--------------|
-| Frontend  | VS Code, HTML, CSS, JavaScript |
-| Backend   | IntelliJ IDEA, Java, JavaFX, PostgreSQL (JDBC) |
+| Backend   | Java, JavaFX, Maven, Firebase Firestore |
+| Frontend  | React, TypeScript, Vite, TailwindCSS, Firebase |
+| Base de datos | Firebase Firestore (NoSQL) + PostgreSQL (modelo relacional) |
 
-## Cómo se comunican frontend y backend
+## Roles del sistema
 
-El backend (JavaFX) exporta los datos de los videojuegos (y sus imágenes) hacia la carpeta `frontend/data/` y `frontend/img/`. El frontend solo lee esos archivos y los muestra; no tiene lógica de negocio ni conexión directa a la base de datos.
+- **ADMINISTRADOR** — Gestiona el inventario, edita y elimina productos
+- **EMPLEADO** — Gestiona el inventario, registra y actualiza productos
+- **USUARIO** — Navega el catálogo, busca juegos y registra compras
 
-## Cómo ejecutar cada parte
+## Funcionalidades principales
 
-Ver instrucciones específicas en:
-- [frontend/README.md](./frontend/README.md)
-- [backend/README.md](./backend/README.md)
+- Inicio de sesión con autenticación por roles
+- Dashboard con CRUD de videojuegos (crear, leer, actualizar, eliminar)
+- Búsqueda y filtrado de productos en tiempo real
+- Compra de videojuegos con generación de factura
+- Catálogo web con filtros por género, plataforma y ordenamiento
 
-## Autor
+## Cómo ejecutar
 
-Tu nombre aquí
+### Backend (escritorio)
+
+```bash
+cd backend
+mvn clean javafx:run
+```
+
+### Frontend (web)
+
+```bash
+cd diseño-poo
+pnpm install
+pnpm dev
+```

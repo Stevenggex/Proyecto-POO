@@ -85,7 +85,7 @@
                                                 <VBox spacing="5.0" HBox.hgrow="ALWAYS">
                                                     <children>
                                                         <Label styleClass="text-muted" text="Precio (USD)" />
-                                                        <TextField fx:id="precioField" prefHeight="38.0" promptText="$ 0.00" styleClass="text-input-custom" />
+                                                        <TextField fx:id="precioField" prefHeight="38.0" promptText="\$ 0.00" styleClass="text-input-custom" />
                                                     </children>
                                                 </VBox>
                                                 <VBox spacing="5.0" HBox.hgrow="ALWAYS">

@@ -3,9 +3,11 @@ import { useState } from 'react'
 interface HeaderProps {
   searchQuery: string
   onSearch: (q: string) => void
+  onRegister: () => void
+  onInstallApp: () => void
 }
 
-export default function Header({ searchQuery, onSearch }: HeaderProps) {
+export default function Header({ searchQuery, onSearch, onRegister, onInstallApp }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
@@ -86,20 +88,32 @@ export default function Header({ searchQuery, onSearch }: HeaderProps) {
             </div>
           </div>
 
-          {/* Read-only badge */}
-          <div
-            className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium shrink-0"
-            style={{
-              background: 'rgba(62,7,120,0.3)',
-              border: '1px solid rgba(192,132,252,0.3)',
-              color: '#C084FC',
-            }}
-          >
-            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
-              <path fillRule="evenodd" d="M1.323 11.447C2.811 6.976 7.028 3.75 12.001 3.75c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113-1.487 4.471-5.705 7.697-10.677 7.697-4.97 0-9.186-3.223-10.675-7.69a1.762 1.762 0 010-1.113zM17.25 12a5.25 5.25 0 11-10.5 0 5.25 5.25 0 0110.5 0z" clipRule="evenodd" />
-            </svg>
-            Solo lectura
+          {/* Action buttons */}
+          <div className="hidden sm:flex items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={onInstallApp}
+              className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
+              style={{
+                background: 'rgba(192,132,252,0.15)',
+                border: '1px solid rgba(192,132,252,0.35)',
+                color: '#E9D5FF',
+              }}
+            >
+              Instalar App
+            </button>
+            <button
+              type="button"
+              onClick={onRegister}
+              className="px-3 py-1.5 rounded-full text-xs font-semibold transition-all duration-200"
+              style={{
+                background: 'linear-gradient(135deg, #3E0778, #040A6B)',
+                border: '1px solid rgba(232,121,249,0.35)',
+                color: '#F5E8FF',
+              }}
+            >
+              Registro
+            </button>
           </div>
 
           {/* Mobile menu button */}

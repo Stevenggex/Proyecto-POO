@@ -4,10 +4,11 @@ import HeroBanner from './components/HeroBanner'
 import FilterBar from './components/FilterBar'
 import GameGrid from './components/GameGrid'
 import Footer from './components/Footer'
-import { useGames } from './hooks/useGames'
-import type { Game, Genre, Platform } from './data/games'
+import AuthModal from './components/AuthModal'
+import { games } from './data/games'
+import type { Genre, Platform } from './data/games'
 
-function StatsBar({ games }: { games: Game[] }) {
+function StatsBar() {
   const total = games.length
   const genres = new Set(games.map(g => g.genre)).size
   const platformsCount = new Set(games.flatMap(g => g.platforms)).size
@@ -26,7 +27,9 @@ function StatsBar({ games }: { games: Game[] }) {
       style={{ borderColor: 'rgba(62,7,120,0.3)', background: 'rgba(4,10,107,0.25)' }}
     >
       <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 sm:grid-cols-4 divide-x">
+        <div className="grid grid-cols-2 sm:grid-cols-4 divide-x"
+          style={{ divideColor: 'rgba(62,7,120,0.3)' }}
+        >
           {stats.map((s, i) => (
             <div
               key={i}
@@ -50,11 +53,12 @@ function StatsBar({ games }: { games: Game[] }) {
 }
 
 export default function App() {
-  const { games, loading } = useGames()
   const [selectedGenre, setSelectedGenre] = useState<Genre | 'Todos'>('Todos')
   const [selectedPlatform, setSelectedPlatform] = useState<Platform | 'Todas'>('Todas')
   const [sortBy, setSortBy] = useState<'rating' | 'price-asc' | 'price-desc' | 'title'>('rating')
   const [searchQuery, setSearchQuery] = useState('')
+  const [isAuthOpen, setIsAuthOpen] = useState(false)
+  const [activeUser, setActiveUser] = useState<{ username: string; role: string } | null>(null)
 
   const featuredGame = games.find(g => g.featured) ?? games[0]
 
@@ -72,22 +76,21 @@ export default function App() {
       return a.title.localeCompare(b.title)
     })
 
-  if (loading) {
-    return (
-      <div style={{ fontFamily: 'Inter, sans-serif', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(160deg, #071B42 0%, #040A6B 40%, #3E0778 100%)' }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '48px', marginBottom: '16px' }}>🎮</div>
-          <p style={{ color: '#C084FC', fontFamily: 'Oxanium, sans-serif', fontSize: '1.2rem' }}>Cargando catálogo...</p>
-        </div>
-      </div>
-    )
+  const handleAuthOpen = () => setIsAuthOpen(true)
+  const handleAuthClose = () => setIsAuthOpen(false)
+  const handleLoginSuccess = (user: { username: string; role: string }) => {
+    setActiveUser(user)
+    setIsAuthOpen(false)
+  }
+  const handleInstallApp = () => {
+    window.alert('La instalación de la app aún no está habilitada.')
   }
 
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }} className="min-h-screen flex flex-col">
-      <Header searchQuery={searchQuery} onSearch={setSearchQuery} />
-      {featuredGame && <HeroBanner game={featuredGame} />}
-      <StatsBar games={games} />
+      <Header searchQuery={searchQuery} onSearch={setSearchQuery} onRegister={handleAuthOpen} onInstallApp={handleAuthOpen} />
+      <HeroBanner game={featuredGame} />
+      <StatsBar />
       <main className="flex-1 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <FilterBar
           selectedGenre={selectedGenre}
@@ -101,6 +104,13 @@ export default function App() {
         <GameGrid games={filtered} />
       </main>
       <Footer />
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={handleAuthClose}
+        onLoginSuccess={handleLoginSuccess}
+        onInstallApp={handleInstallApp}
+        activeUser={activeUser}
+      />
     </div>
   )
 }

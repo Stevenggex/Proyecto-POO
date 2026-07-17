@@ -1,7 +1,6 @@
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import { initializeApp, getApps } from "firebase/app";
+import { getDatabase } from "firebase/database";
 
-// Configuracion de Firebase - reemplaza con los datos de tu proyecto
 const firebaseConfig = {
   apiKey: "AIzaSyDVITbym70fMGh3jX6ygcv4U5pXNFfqTs0",
   authDomain: "tienda-de-videojuegos-23b12.firebaseapp.com",
@@ -11,5 +10,6 @@ const firebaseConfig = {
   appId: "1:815052921177:web:2d1586c668c6efaf889448"
 };
 
-const app = initializeApp(firebaseConfig)
-export const db = getFirestore(app)
+const app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
+
+export const db = getDatabase(app);

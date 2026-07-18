@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, where } from 'firebase/firestore'
+import { db } from '../firebase'
 
 interface AuthModalProps {
   isOpen: boolean
@@ -29,23 +31,17 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, onInstallAp
 
   if (!isOpen) return null
 
-  const getLocalUsers = () => {
-    if (typeof window === 'undefined') return {}
+  const findUserByUsername = async (cleanUsername: string) => {
+    const usersRef = collection(db, 'Usuario')
+    let usersQuery = query(usersRef, where('usuarioLower', '==', cleanUsername))
+    let usersSnapshot = await getDocs(usersQuery)
 
-    try {
-      const stored = window.localStorage.getItem('gamevault-users')
-      return stored ? JSON.parse(stored) : {}
-    } catch {
-      return {}
+    if (usersSnapshot.empty) {
+      usersQuery = query(usersRef, where('usuario', '==', cleanUsername))
+      usersSnapshot = await getDocs(usersQuery)
     }
-  }
 
-  const saveLocalUser = (user: { username: string; password: string; role: string }) => {
-    if (typeof window === 'undefined') return
-
-    const users = getLocalUsers()
-    users[user.username.toLowerCase()] = user
-    window.localStorage.setItem('gamevault-users', JSON.stringify(users))
+    return usersSnapshot.docs[0]
   }
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -64,15 +60,18 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, onInstallAp
     setIsSubmitting(true)
 
     try {
-      const localUsers = getLocalUsers()
-      const localUser = localUsers[cleanUsername]
+      const userDoc = await findUserByUsername(cleanUsername)
+      const localUser = userDoc?.data()
 
       if (localUser?.password === cleanPassword) {
         setSuccessMessage('¡Inicio de sesión correcto!')
-        onLoginSuccess({ username: localUser.username, role: localUser.role })
+        onLoginSuccess({ username: localUser.usuario ?? localUser.username, role: localUser.rol ?? localUser.role })
       } else {
         setError('El usuario o la contraseña no coinciden.')
       }
+    } catch (error) {
+      console.error('Login error:', error)
+      setError('No se pudo completar el inicio de sesión.')
     } finally {
       setIsSubmitting(false)
     }
@@ -95,18 +94,20 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess, onInstallAp
 
     try {
       const normalizedUsername = cleanUsername.toLowerCase()
-      const localUsers = getLocalUsers()
+      const existingUserDoc = await findUserByUsername(normalizedUsername)
 
-      if (localUsers[normalizedUsername]) {
+      if (existingUserDoc) {
         setError('Ese usuario ya existe. Elige otro nombre.')
         setIsSubmitting(false)
         return
       }
 
-      saveLocalUser({
-        username: cleanUsername,
+      const usersRef = collection(db, 'Usuario')
+      await addDoc(usersRef, {
+        usuario: cleanUsername,
+        usuarioLower: normalizedUsername,
         password: cleanPassword,
-        role: 'Usuario',
+        rol: 'Usuario',
       })
 
       setUsername(cleanUsername)

@@ -1,8 +1,8 @@
-export type Platform = 'PS5' | 'PC' | 'XSX' | 'Switch' | 'PS4'
-export type Genre = 'RPG' | 'Acción' | 'Terror' | 'Lucha' | 'Aventura' | 'Soulslike' | 'Estrategia'
+export type Platform = 'PS5' | 'PS4' | 'PC' | 'Steam' | 'Switch' | 'XBOX Series'
+export type Genre = 'Acción' | 'Aventura' | 'Rol (RPG)' | 'Disparos (Shooter)' | 'Deportes y Carreras' | 'Estrategia' | 'Simulación' | 'Puzles y Lógica' | 'Plataformas' | 'Battle Royale' | 'RPG' | 'Terror' | 'Lucha' | 'Soulslike'
 
 export interface Game {
-  id: number
+  id: string | number
   title: string
   developer: string
   genre: Genre
@@ -23,7 +23,7 @@ export const games: Game[] = [
     title: "Elden Ring",
     developer: "FromSoftware",
     genre: "Soulslike",
-    platforms: ["PS5", "PC", "XSX", "PS4"],
+    platforms: ["PS5", "PC", "XBOX Series", "PS4"],
     price: 59.99,
     rating: 9.5,
     votes: 184200,
@@ -37,8 +37,8 @@ export const games: Game[] = [
     id: 2,
     title: "Cyberpunk 2077: Phantom Liberty",
     developer: "CD Projekt RED",
-    genre: "RPG",
-    platforms: ["PC", "PS5", "XSX"],
+    genre: "Rol (RPG)",
+    platforms: ["PC", "PS5", "XBOX Series"],
     price: 29.99,
     rating: 8.9,
     votes: 92400,
@@ -51,8 +51,8 @@ export const games: Game[] = [
     id: 3,
     title: "Baldur's Gate 3",
     developer: "Larian Studios",
-    genre: "RPG",
-    platforms: ["PC", "PS5"],
+    genre: "Rol (RPG)",
+    platforms: ["PC", "PS5", "Steam"],
     price: 59.99,
     rating: 9.9,
     votes: 210500,
@@ -107,8 +107,8 @@ export const games: Game[] = [
     id: 7,
     title: "Starfield",
     developer: "Bethesda Game Studios",
-    genre: "RPG",
-    platforms: ["PC", "XSX"],
+    genre: "Rol (RPG)",
+    platforms: ["PC", "XBOX Series"],
     price: 69.99,
     rating: 7.8,
     votes: 89200,
@@ -122,7 +122,7 @@ export const games: Game[] = [
     title: "Mortal Kombat 1",
     developer: "NetherRealm Studios",
     genre: "Lucha",
-    platforms: ["PS5", "PC", "XSX", "Switch"],
+    platforms: ["PS5", "PC", "XBOX Series", "Switch"],
     price: 69.99,
     rating: 8.2,
     votes: 47300,
@@ -136,7 +136,7 @@ export const games: Game[] = [
     title: "Street Fighter 6",
     developer: "Capcom",
     genre: "Lucha",
-    platforms: ["PS5", "PC", "XSX", "PS4"],
+    platforms: ["PS5", "PC", "XBOX Series", "PS4"],
     price: 59.99,
     rating: 9.1,
     votes: 82700,
@@ -149,8 +149,8 @@ export const games: Game[] = [
     id: 10,
     title: "Diablo IV",
     developer: "Blizzard Entertainment",
-    genre: "Acción",
-    platforms: ["PC", "PS5", "XSX", "PS4"],
+    genre: "Disparos (Shooter)",
+    platforms: ["PC", "PS5", "XBOX Series", "Steam", "PS4"],
     price: 69.99,
     rating: 8.4,
     votes: 118400,
@@ -164,7 +164,7 @@ export const games: Game[] = [
     title: "Lies of P",
     developer: "NEOWIZ",
     genre: "Soulslike",
-    platforms: ["PS5", "PC", "XSX"],
+    platforms: ["PS5", "PC", "XBOX Series"],
     price: 49.99,
     rating: 8.7,
     votes: 53100,
@@ -178,7 +178,7 @@ export const games: Game[] = [
     title: "Hogwarts Legacy",
     developer: "Avalanche Software",
     genre: "Aventura",
-    platforms: ["PS5", "PC", "XSX", "Switch", "PS4"],
+    platforms: ["PS5", "PC", "XBOX Series", "Switch", "PS4"],
     price: 49.99,
     rating: 8.5,
     votes: 156800,
@@ -189,5 +189,5 @@ export const games: Game[] = [
   },
 ]
 
-export const genres: Genre[] = ['RPG', 'Acción', 'Terror', 'Lucha', 'Aventura', 'Soulslike', 'Estrategia']
-export const platforms: Platform[] = ['PS5', 'PC', 'XSX', 'Switch', 'PS4']
+export const genres: Genre[] = ['Acción', 'Aventura', 'Rol (RPG)', 'Disparos (Shooter)', 'Deportes y Carreras', 'Estrategia', 'Simulación', 'Puzles y Lógica', 'Plataformas', 'Battle Royale', 'RPG', 'Terror', 'Lucha', 'Soulslike']
+export const platforms: Platform[] = ['PS5', 'Switch', 'XBOX Series', 'PC', 'Steam', 'PS4']

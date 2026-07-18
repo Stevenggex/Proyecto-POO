@@ -1,14 +1,15 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Header from './components/Header'
 import HeroBanner from './components/HeroBanner'
 import FilterBar from './components/FilterBar'
 import GameGrid from './components/GameGrid'
 import Footer from './components/Footer'
 import AuthModal from './components/AuthModal'
-import { games } from './data/games'
-import type { Genre, Platform } from './data/games'
+import { useGames } from './hooks/useGames'
+import type { Game, Genre, Platform } from './data/games'
+import { genres as allGenres, platforms as allPlatforms } from './data/games'
 
-function StatsBar() {
+function StatsBar({ games }: { games: Game[] }) {
   const total = games.length
   const genres = new Set(games.map(g => g.genre)).size
   const platformsCount = new Set(games.flatMap(g => g.platforms)).size
@@ -59,8 +60,21 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isAuthOpen, setIsAuthOpen] = useState(false)
   const [activeUser, setActiveUser] = useState<{ username: string; role: string } | null>(null)
+  const { games, loading } = useGames()
 
-  const featuredGame = games.find(g => g.featured) ?? games[0]
+  const availableGenres = useMemo(() => {
+    const setGenres = new Set<Genre>(allGenres)
+    games.forEach(game => setGenres.add(game.genre))
+    return Array.from(setGenres) as Genre[]
+  }, [games])
+
+  const availablePlatforms = useMemo(() => {
+    const setPlatforms = new Set<Platform>(allPlatforms)
+    games.forEach(game => game.platforms.forEach(platform => setPlatforms.add(platform)))
+    return Array.from(setPlatforms) as Platform[]
+  }, [games])
+
+  const featuredGame = games.find(g => g.featured) ?? games[0] ?? null
 
   const filtered = games
     .filter(g => selectedGenre === 'Todos' || g.genre === selectedGenre)
@@ -82,6 +96,7 @@ export default function App() {
     setActiveUser(user)
     setIsAuthOpen(false)
   }
+
   const handleInstallApp = () => {
     window.alert('La instalación de la app aún no está habilitada.')
   }
@@ -89,8 +104,8 @@ export default function App() {
   return (
     <div style={{ fontFamily: 'Inter, sans-serif' }} className="min-h-screen flex flex-col">
       <Header searchQuery={searchQuery} onSearch={setSearchQuery} onRegister={handleAuthOpen} onInstallApp={handleAuthOpen} />
-      <HeroBanner game={featuredGame} />
-      <StatsBar />
+      {featuredGame ? <HeroBanner game={featuredGame} /> : null}
+      <StatsBar games={games} />
       <main className="flex-1 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 pb-20">
         <FilterBar
           selectedGenre={selectedGenre}
@@ -100,8 +115,14 @@ export default function App() {
           onPlatformChange={setSelectedPlatform}
           onSortChange={setSortBy}
           totalResults={filtered.length}
+          availableGenres={availableGenres}
+          availablePlatforms={availablePlatforms}
         />
-        <GameGrid games={filtered} />
+        {loading ? (
+          <div className="text-center py-20 text-white">Cargando juegos...</div>
+        ) : (
+          <GameGrid games={filtered} />
+        )}
       </main>
       <Footer />
       <AuthModal

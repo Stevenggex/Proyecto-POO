@@ -2,19 +2,21 @@ import { useState } from 'react'
 import type { Game, Platform } from '../data/games'
 
 export const platformColors: Record<Platform, string> = {
-  PS5:    '#003087',
-  PS4:    '#003087',
-  PC:     '#FF6B00',
-  XSX:    '#107C10',
-  Switch: '#E4000F',
+  PS5:         '#003087',
+  PS4:         '#003087',
+  PC:          '#FF6B00',
+  Steam:       '#1DA1F2',
+  Switch:      '#E4000F',
+  'XBOX Series': '#107C10',
 }
 
 export const platformLabels: Record<Platform, string> = {
-  PS5:    'PS5',
-  PS4:    'PS4',
-  PC:     'PC',
-  XSX:    'Xbox',
-  Switch: 'Switch',
+  PS5:          'PS5',
+  PS4:          'PS4',
+  PC:           'PC',
+  Steam:        'Steam',
+  Switch:       'Switch',
+  'XBOX Series': 'XBOX Series',
 }
 
 interface GameCardProps {

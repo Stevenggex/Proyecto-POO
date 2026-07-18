@@ -1,5 +1,5 @@
 import type { Genre, Platform } from '../data/games'
-import { genres, platforms } from '../data/games'
+import { genres as allGenres, platforms as allPlatforms } from '../data/games'
 
 interface FilterBarProps {
   selectedGenre: Genre | 'Todos'
@@ -9,6 +9,8 @@ interface FilterBarProps {
   onPlatformChange: (p: Platform | 'Todas') => void
   onSortChange: (s: 'rating' | 'price-asc' | 'price-desc' | 'title') => void
   totalResults: number
+  availableGenres: Genre[]
+  availablePlatforms: Platform[]
 }
 
 const sortOptions = [
@@ -21,7 +23,7 @@ const sortOptions = [
 export default function FilterBar({
   selectedGenre, selectedPlatform, sortBy,
   onGenreChange, onPlatformChange, onSortChange,
-  totalResults,
+  totalResults, availableGenres, availablePlatforms,
 }: FilterBarProps) {
   return (
     <div className="py-6 space-y-4">
@@ -62,7 +64,7 @@ export default function FilterBar({
       {/* Genre chips */}
       <div className="flex flex-wrap gap-2 items-center">
         <span className="text-xs font-medium mr-1" style={{ color: '#7E9BBF' }}>Género:</span>
-        {(['Todos', ...genres] as const).map(g => {
+        {(['Todos', ...allGenres.filter(g => availableGenres.includes(g))] as (Genre | 'Todos')[]).map(g => {
           const active = selectedGenre === g
           return (
             <button
@@ -85,7 +87,7 @@ export default function FilterBar({
       {/* Platform chips */}
       <div className="flex flex-wrap gap-2 items-center">
         <span className="text-xs font-medium mr-1" style={{ color: '#7E9BBF' }}>Plataforma:</span>
-        {(['Todas', ...platforms] as const).map(p => {
+        {(['Todas', ...allPlatforms.filter(p => availablePlatforms.includes(p))] as (Platform | 'Todas')[]).map(p => {
           const active = selectedPlatform === p
           return (
             <button

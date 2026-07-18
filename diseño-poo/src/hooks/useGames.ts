@@ -11,8 +11,7 @@ export function useGames() {
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(db, 'videojuegos'), (snapshot) => {
       const gamesList = snapshot.docs.map(doc => {
-        const data = doc.data()
-        data.id = doc.id
+        const data = { ...doc.data(), id: doc.id }
         return mapFirestoreGame(data as any)
       })
       setGames(gamesList)

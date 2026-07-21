@@ -1,12 +1,10 @@
-export type Platform = 'PS5' | 'PS4' | 'PC' | 'Steam' | 'Switch' | 'XBOX Series'
-export type Genre = 'Acción' | 'Aventura' | 'Rol (RPG)' | 'Disparos (Shooter)' | 'Deportes y Carreras' | 'Estrategia' | 'Simulación' | 'Puzles y Lógica' | 'Plataformas' | 'Battle Royale' | 'RPG' | 'Terror' | 'Lucha' | 'Soulslike'
+export type Genre = 'Acción / RPG' | 'Estrategia' | 'Simulador' | 'Terror' | 'Indie'
 
 export interface Game {
   id: string | number
   title: string
   developer: string
   genre: Genre
-  platforms: Platform[]
   price: number
   rating: number
   votes: number
@@ -22,8 +20,7 @@ export const games: Game[] = [
     id: 1,
     title: "Elden Ring",
     developer: "FromSoftware",
-    genre: "Soulslike",
-    platforms: ["PS5", "PC", "XBOX Series", "PS4"],
+    genre: "Acción / RPG",
     price: 59.99,
     rating: 9.5,
     votes: 184200,
@@ -37,8 +34,7 @@ export const games: Game[] = [
     id: 2,
     title: "Cyberpunk 2077: Phantom Liberty",
     developer: "CD Projekt RED",
-    genre: "Rol (RPG)",
-    platforms: ["PC", "PS5", "XBOX Series"],
+    genre: "Acción / RPG",
     price: 29.99,
     rating: 8.9,
     votes: 92400,
@@ -51,8 +47,7 @@ export const games: Game[] = [
     id: 3,
     title: "Baldur's Gate 3",
     developer: "Larian Studios",
-    genre: "Rol (RPG)",
-    platforms: ["PC", "PS5", "Steam"],
+    genre: "Acción / RPG",
     price: 59.99,
     rating: 9.9,
     votes: 210500,
@@ -65,8 +60,7 @@ export const games: Game[] = [
     id: 4,
     title: "God of War: Ragnarök",
     developer: "Santa Monica Studio",
-    genre: "Acción",
-    platforms: ["PS5", "PS4"],
+    genre: "Acción / RPG",
     price: 69.99,
     rating: 9.8,
     votes: 176300,
@@ -80,7 +74,6 @@ export const games: Game[] = [
     title: "Alan Wake 2",
     developer: "Remedy Entertainment",
     genre: "Terror",
-    platforms: ["PC", "PS5", "XSX"],
     price: 59.99,
     rating: 9.0,
     votes: 68900,
@@ -93,8 +86,7 @@ export const games: Game[] = [
     id: 6,
     title: "Marvel's Spider-Man 2",
     developer: "Insomniac Games",
-    genre: "Acción",
-    platforms: ["PS5"],
+    genre: "Acción / RPG",
     price: 69.99,
     rating: 9.3,
     votes: 134600,
@@ -107,8 +99,7 @@ export const games: Game[] = [
     id: 7,
     title: "Starfield",
     developer: "Bethesda Game Studios",
-    genre: "Rol (RPG)",
-    platforms: ["PC", "XBOX Series"],
+    genre: "Acción / RPG",
     price: 69.99,
     rating: 7.8,
     votes: 89200,
@@ -121,8 +112,7 @@ export const games: Game[] = [
     id: 8,
     title: "Mortal Kombat 1",
     developer: "NetherRealm Studios",
-    genre: "Lucha",
-    platforms: ["PS5", "PC", "XBOX Series", "Switch"],
+    genre: "Acción / RPG",
     price: 69.99,
     rating: 8.2,
     votes: 47300,
@@ -135,8 +125,7 @@ export const games: Game[] = [
     id: 9,
     title: "Street Fighter 6",
     developer: "Capcom",
-    genre: "Lucha",
-    platforms: ["PS5", "PC", "XBOX Series", "PS4"],
+    genre: "Acción / RPG",
     price: 59.99,
     rating: 9.1,
     votes: 82700,
@@ -149,8 +138,7 @@ export const games: Game[] = [
     id: 10,
     title: "Diablo IV",
     developer: "Blizzard Entertainment",
-    genre: "Disparos (Shooter)",
-    platforms: ["PC", "PS5", "XBOX Series", "Steam", "PS4"],
+    genre: "Acción / RPG",
     price: 69.99,
     rating: 8.4,
     votes: 118400,
@@ -163,8 +151,7 @@ export const games: Game[] = [
     id: 11,
     title: "Lies of P",
     developer: "NEOWIZ",
-    genre: "Soulslike",
-    platforms: ["PS5", "PC", "XBOX Series"],
+    genre: "Acción / RPG",
     price: 49.99,
     rating: 8.7,
     votes: 53100,
@@ -177,8 +164,7 @@ export const games: Game[] = [
     id: 12,
     title: "Hogwarts Legacy",
     developer: "Avalanche Software",
-    genre: "Aventura",
-    platforms: ["PS5", "PC", "XBOX Series", "Switch", "PS4"],
+    genre: "Indie",
     price: 49.99,
     rating: 8.5,
     votes: 156800,
@@ -189,5 +175,4 @@ export const games: Game[] = [
   },
 ]
 
-export const genres: Genre[] = ['Acción', 'Aventura', 'Rol (RPG)', 'Disparos (Shooter)', 'Deportes y Carreras', 'Estrategia', 'Simulación', 'Puzles y Lógica', 'Plataformas', 'Battle Royale', 'RPG', 'Terror', 'Lucha', 'Soulslike']
-export const platforms: Platform[] = ['PS5', 'Switch', 'XBOX Series', 'PC', 'Steam', 'PS4']
+export const genres: Genre[] = ['Acción / RPG', 'Estrategia', 'Simulador', 'Terror', 'Indie']

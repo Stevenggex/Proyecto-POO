@@ -1,16 +1,13 @@
-import type { Genre, Platform } from '../data/games'
-import { genres as allGenres, platforms as allPlatforms } from '../data/games'
+import type { Genre } from '../data/games'
+import { genres as allGenres } from '../data/games'
 
 interface FilterBarProps {
   selectedGenre: Genre | 'Todos'
-  selectedPlatform: Platform | 'Todas'
   sortBy: 'rating' | 'price-asc' | 'price-desc' | 'title'
   onGenreChange: (g: Genre | 'Todos') => void
-  onPlatformChange: (p: Platform | 'Todas') => void
   onSortChange: (s: 'rating' | 'price-asc' | 'price-desc' | 'title') => void
   totalResults: number
   availableGenres: Genre[]
-  availablePlatforms: Platform[]
 }
 
 const sortOptions = [
@@ -21,9 +18,9 @@ const sortOptions = [
 ] as const
 
 export default function FilterBar({
-  selectedGenre, selectedPlatform, sortBy,
-  onGenreChange, onPlatformChange, onSortChange,
-  totalResults, availableGenres, availablePlatforms,
+  selectedGenre, sortBy,
+  onGenreChange, onSortChange,
+  totalResults, availableGenres,
 }: FilterBarProps) {
   return (
     <div className="py-6 space-y-4">
@@ -79,28 +76,6 @@ export default function FilterBar({
               }}
             >
               {g}
-            </button>
-          )
-        })}
-      </div>
-
-      {/* Platform chips */}
-      <div className="flex flex-wrap gap-2 items-center">
-        <span className="text-xs font-medium mr-1" style={{ color: '#7E9BBF' }}>Plataforma:</span>
-        {(['Todas', ...allPlatforms.filter(p => availablePlatforms.includes(p))] as (Platform | 'Todas')[]).map(p => {
-          const active = selectedPlatform === p
-          return (
-            <button
-              key={p}
-              onClick={() => onPlatformChange(p as Platform | 'Todas')}
-              className="px-3 py-1.5 rounded-full text-xs font-bold uppercase tracking-wide transition-all duration-150"
-              style={{
-                background: active ? 'rgba(62,7,120,0.6)' : 'rgba(11,30,74,0.8)',
-                color: active ? '#C084FC' : '#94A3B8',
-                border: active ? '1px solid rgba(192,132,252,0.5)' : '1px solid rgba(30,58,110,0.6)',
-              }}
-            >
-              {p}
             </button>
           )
         })}

@@ -5,9 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="69f8f3c7-d1b9-4ef7-ad4b-e3708b45dc64" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/proyecto-poo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/proyecto-poo.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/modelo/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/modelo/LoginController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/dist/assets/index-D-CIBtmv.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/dist/assets/index-F_2ouZrn.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/dist/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/diseño-poo/dist/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/firebase.json" beforeDir="false" afterPath="$PROJECT_DIR$/diseño-poo/firebase.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/diseño-poo/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/src/components/AuthModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/diseño-poo/src/components/AuthModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/src/components/FilterBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/diseño-poo/src/components/FilterBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/src/components/GameCard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/diseño-poo/src/components/GameCard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/src/data/games.ts" beforeDir="false" afterPath="$PROJECT_DIR$/diseño-poo/src/data/games.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diseño-poo/src/firebase.ts" beforeDir="false" afterPath="$PROJECT_DIR$/diseño-poo/src/firebase.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,23 +24,23 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="64" />
+    <option name="cachedIndexableFilesCount" value="240" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "NicolayBarreno2134"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;NicolayBarreno2134&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Stevenggex/Proyecto-POO.git",
-    "accountId": "20b8fd73-7b3f-4c5d-825b-d00c3d3c4ea7"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Stevenggex/Proyecto-POO.git&quot;,
+    &quot;accountId&quot;: &quot;20b8fd73-7b3f-4c5d-825b-d00c3d3c4ea7&quot;
   }
-}]]></component>
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/backend/src/main/java/dao/VideojuegoDAO.java" root0="SKIP_INSPECTION" />
   </component>
@@ -61,7 +70,7 @@
     "git-widget-placeholder": "main",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/PC/OneDrive/Escritorio/proyecto-poo",
+    "last_opened_file_path": "C:/Users/MSI/Desktop/NICOLAY BARRENO EPN/POO/Proyecto-POO",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",

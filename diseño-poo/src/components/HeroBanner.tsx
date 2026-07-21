@@ -1,5 +1,4 @@
 import type { Game } from '../data/games'
-import { platformColors, platformLabels } from './GameCard'
 
 interface HeroBannerProps {
   game: Game
@@ -81,19 +80,6 @@ export default function HeroBanner({ game }: HeroBannerProps) {
               </p>
               <p className="text-xs" style={{ color: '#7E9BBF' }}>USD</p>
             </div>
-          </div>
-
-          {/* Platforms */}
-          <div className="flex items-center gap-2 flex-wrap">
-            {game.platforms.map(p => (
-              <span
-                key={p}
-                className="px-3 py-1 rounded text-xs font-bold uppercase"
-                style={{ background: platformColors[p] + '22', color: platformColors[p], border: `1px solid ${platformColors[p]}44` }}
-              >
-                {platformLabels[p]}
-              </span>
-            ))}
           </div>
         </div>
 

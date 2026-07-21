@@ -1,0 +1,15 @@
+========================================
+Fecha: 2026-07-21 18:11:57
+Cliente: Nicolay Barreno
+Telefono: 0963446081
+Direccion: S32E;OE11B
+Correo: nicoyvca2134@gmail.com
+Metodo de pago: Tarjeta de Debito
+----------------------------------------
+Juegos:
+  - Spider-Man x1  $30,50  Subtotal: $30,50
+  - Elden Ring x1  $50,00  Subtotal: $50,00
+----------------------------------------
+TOTAL: $80,50
+========================================
+

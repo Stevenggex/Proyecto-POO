@@ -1,23 +1,5 @@
 import { useState } from 'react'
-import type { Game, Platform } from '../data/games'
-
-export const platformColors: Record<Platform, string> = {
-  PS5:         '#003087',
-  PS4:         '#003087',
-  PC:          '#FF6B00',
-  Steam:       '#1DA1F2',
-  Switch:      '#E4000F',
-  'XBOX Series': '#107C10',
-}
-
-export const platformLabels: Record<Platform, string> = {
-  PS5:          'PS5',
-  PS4:          'PS4',
-  PC:           'PC',
-  Steam:        'Steam',
-  Switch:       'Switch',
-  'XBOX Series': 'XBOX Series',
-}
+import type { Game } from '../data/games'
 
 interface GameCardProps {
   game: Game
@@ -101,23 +83,6 @@ export default function GameCard({ game }: GameCardProps) {
             {game.title}
           </h3>
           <p className="text-xs" style={{ color: '#7E9BBF' }}>{game.developer}</p>
-        </div>
-
-        {/* Platforms */}
-        <div className="flex gap-1 flex-wrap">
-          {game.platforms.map(p => (
-            <span
-              key={p}
-              className="px-2 py-0.5 rounded text-xs font-bold"
-              style={{
-                background: platformColors[p] + '22',
-                color: platformColors[p],
-                border: `1px solid ${platformColors[p]}44`,
-              }}
-            >
-              {platformLabels[p]}
-            </span>
-          ))}
         </div>
 
         {/* Price + release */}

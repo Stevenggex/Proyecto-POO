@@ -1,11 +1,10 @@
-import type { Game, Genre, Platform } from './games'
+import type { Game, Genre } from './games'
 
 interface FirestoreGame {
   id: string
   nombre: string
   desarrollador: string
   genero: string
-  plataformas: string | string[]
   precio: number
   cantidad: number
   stock: boolean
@@ -18,18 +17,11 @@ interface FirestoreGame {
 }
 
 export function mapFirestoreGame(doc: FirestoreGame): Game {
-  const platforms = Array.isArray(doc.plataformas)
-    ? doc.plataformas.map(p => p.trim())
-    : doc.plataformas
-      .split(',')
-      .map(p => p.trim())
-
   return {
     id: doc.id,
     title: doc.nombre,
     developer: doc.desarrollador,
     genre: doc.genero as Genre,
-    platforms: platforms as Platform[],
     price: doc.precio,
     rating: doc.puntuacion,
     votes: doc.votos,

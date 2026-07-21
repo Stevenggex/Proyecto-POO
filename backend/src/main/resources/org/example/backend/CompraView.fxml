@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.control.cell.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
@@ -12,11 +11,11 @@
         <VBox prefWidth="220.0" spacing="12.0" styleClass="sidebar">
             <padding><Insets bottom="24.0" left="16.0" right="16.0" top="24.0" /></padding>
             <children>
-                <Label styleClass="brand-title" text="QUEST_LOG">
+                <Label styleClass="brand-title">
                     <font><Font name="System Bold" size="22.0" /></font>
                 </Label>
-                <Label opacity="0.6" styleClass="text-muted" text="Cliente">
-                    <font><Font size="11.0" /></font>
+                <Label styleClass="text-white" text="Cliente">
+                    <font><Font name="Bauhaus 93" size="28.0" /></font>
                 </Label>
                 <Separator opacity="0.3" />
                 <Button maxWidth="1.7976931348623157E308" onAction="#handleCatalogo" prefHeight="38.0" styleClass="nav-button" text="Catalogo" />
@@ -81,7 +80,7 @@
                                         <TextField fx:id="direccionField" promptText="Dirección" styleClass="text-input-custom" />
                                         <HBox spacing="10.0">
                                             <TextField fx:id="correoField" promptText="Correo" styleClass="text-input-custom" HBox.hgrow="ALWAYS" />
-                                            <TextField fx:id="telefonoField" promptText="Teléfono" prefWidth="140.0" styleClass="text-input-custom" />
+                                            <TextField fx:id="telefonoField" prefWidth="140.0" promptText="Teléfono" styleClass="text-input-custom" />
                                         </HBox>
                                         <ComboBox fx:id="pagoCombo" maxWidth="1.7976931348623157E308" promptText="Método de pago..." styleClass="text-input-custom" />
                                     </children>
@@ -100,12 +99,13 @@
                                             </Label>
                                         </HBox>
 
-                                        <TableView fx:id="facturaTable" prefHeight="200.0" styleClass="text-input-custom" VBox.vgrow="ALWAYS">
+                                        <TableView fx:id="facturaTable" prefHeight="200.0" VBox.vgrow="ALWAYS" style="-fx-background-color: #1a2137; -fx-border-color: #2a3a5c; -fx-border-width: 1.5px; -fx-border-radius: 8px; -fx-background-radius: 8px;">
                                             <columns>
-                                                <TableColumn fx:id="colProducto" prefWidth="180.0" text="Producto" />
-                                                <TableColumn fx:id="colCant" prefWidth="60.0" text="Cant." />
-                                                <TableColumn fx:id="colPrecio" prefWidth="80.0" text="Precio" />
-                                                <TableColumn fx:id="colSubtotal" prefWidth="80.0" text="Subtotal" />
+                                                <TableColumn fx:id="colProducto" prefWidth="155.0" text="Producto" />
+                                                <TableColumn fx:id="colCant" prefWidth="50.0" text="Cant." />
+                                                <TableColumn fx:id="colPrecio" prefWidth="70.0" text="Precio" />
+                                                <TableColumn fx:id="colSubtotal" prefWidth="70.0" text="Subtotal" />
+                                                <TableColumn fx:id="colEliminar" prefWidth="50.0" text=" " />
                                             </columns>
                                         </TableView>
 

@@ -4,8 +4,8 @@
 <?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="768.0" prefWidth="1280.0" stylesheets="/Estilos/style-dashboard.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="modelo.DashboardController">
@@ -19,12 +19,12 @@
                 <!-- Logo / Brand -->
                 <VBox spacing="2.0">
                     <children>
-                        <Label styleClass="brand-title" text="QUEST_LOG">
+                        <Label styleClass="brand-title" text="Empleado">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                        <Label opacity="0.7" styleClass="text-muted" text="Nivel 42 Admin">
+                        <Label opacity="0.7" styleClass="text-muted" text="Sistema CRUD">
                             <font>
                                 <Font size="11.0" />
                             </font>
@@ -146,10 +146,11 @@
                                             </children>
                                         </VBox>
 
-                                        <VBox fx:id="imagenDropZone" alignment="CENTER" prefHeight="80.0" onMouseClicked="#seleccionarImagen" style="-fx-border-color: #4d4354; -fx-border-style: dashed; -fx-border-width: 2px; -fx-border-radius: 8px; -fx-cursor: hand;">
+                                        <VBox spacing="5.0">
                                             <children>
-                                                <ImageView fx:id="imagenPreview" fitHeight="60.0" fitWidth="60.0" preserveRatio="true" visible="false" />
-                                                <Label fx:id="imagenLabel" styleClass="text-muted" text="Arrastre la portada o haga clic para seleccionar" />
+                                                <Label styleClass="text-muted" text="URL de la imagen" />
+                                                <TextField fx:id="imagenUrlField" prefHeight="38.0" promptText="https://ejemplo.com/imagen.jpg" styleClass="text-input-custom" onAction="#cargarPreviewUrl" />
+                                                <ImageView fx:id="imagenPreview" fitHeight="80.0" fitWidth="80.0" preserveRatio="true" visible="false" style="-fx-background-color: #171f33; -fx-background-radius: 8px;" />
                                             </children>
                                         </VBox>
 

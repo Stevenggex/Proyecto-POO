@@ -9,14 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import dao.VideojuegoDAO;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class AdminController {
@@ -29,9 +25,8 @@ public class AdminController {
     @FXML private TextArea descripcionArea;
     @FXML private Button registrarBtn;
     @FXML private GridPane inventoryGrid;
-    @FXML private VBox imagenDropZone;
+    @FXML private TextField imagenUrlField;
     @FXML private ImageView imagenPreview;
-    @FXML private Label imagenLabel;
     @FXML private Label formTitle;
 
     @FXML private Button dashboardBtn;
@@ -41,7 +36,6 @@ public class AdminController {
 
     private final VideojuegoDAO dao = new VideojuegoDAO();
     private String editandoId = null;
-    private String imagenSeleccionadaPath = null;
 
     @FXML
     private void initialize() {
@@ -109,9 +103,9 @@ public class AdminController {
 
         if (juego.getImagenPath() != null && !juego.getImagenPath().isEmpty()) {
             try {
-                File file = new File(juego.getImagenPath());
-                if (file.exists()) {
-                    ImageView imgView = new ImageView(new Image(file.toURI().toString()));
+                Image image = new Image(juego.getImagenPath(), 80, 80, true, true);
+                if (!image.isError()) {
+                    ImageView imgView = new ImageView(image);
                     imgView.setFitHeight(80.0);
                     imgView.setFitWidth(80.0);
                     imgView.setPreserveRatio(true);
@@ -204,13 +198,14 @@ public class AdminController {
             categoriaCombo.setValue(juego.getGenero());
         }
         if (juego.getImagenPath() != null && !juego.getImagenPath().isEmpty()) {
-            imagenSeleccionadaPath = juego.getImagenPath();
-            File file = new File(imagenSeleccionadaPath);
-            if (file.exists()) {
-                imagenPreview.setImage(new Image(file.toURI().toString()));
-                imagenPreview.setVisible(true);
-                imagenLabel.setVisible(false);
-            }
+            imagenUrlField.setText(juego.getImagenPath());
+            try {
+                Image image = new Image(juego.getImagenPath(), 80, 80, true, true);
+                if (!image.isError()) {
+                    imagenPreview.setImage(image);
+                    imagenPreview.setVisible(true);
+                }
+            } catch (Exception ignored) {}
         }
         formTitle.setText("Editar Producto");
         registrarBtn.setText("Actualizar Producto");
@@ -249,7 +244,8 @@ public class AdminController {
         juego.setCantidad(stock);
         juego.setDescripcion(descripcion);
         if (genero != null) juego.setGenero(genero);
-        if (imagenSeleccionadaPath != null) juego.setImagenPath(imagenSeleccionadaPath);
+        String imgPath = imagenUrlField.getText().trim();
+        if (!imgPath.isEmpty()) juego.setImagenPath(imgPath);
 
         dao.actualizar(juego);
         editandoId = null;
@@ -280,31 +276,27 @@ public class AdminController {
     // ==================== IMAGEN ====================
 
     @FXML
-    private void seleccionarImagen() {
-        if (editandoId == null) return;
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleccionar imagen del producto");
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Imagenes", "*.png", "*.jpg", "*.jpeg", "*.gif")
-        );
-
-        File file = fileChooser.showOpenDialog(imagenDropZone.getScene().getWindow());
-        if (file != null) {
-            try {
-                File imagesDir = new File("src/main/resources/images");
-                if (!imagesDir.exists()) imagesDir.mkdirs();
-
-                File dest = new File(imagesDir, System.currentTimeMillis() + "_" + file.getName());
-                Files.copy(file.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
-
-                imagenSeleccionadaPath = dest.getAbsolutePath();
-                imagenPreview.setImage(new Image(dest.toURI().toString()));
+    private void cargarPreviewUrl() {
+        String url = imagenUrlField.getText().trim();
+        if (url.isEmpty()) {
+            imagenPreview.setImage(null);
+            imagenPreview.setVisible(false);
+            return;
+        }
+        try {
+            Image image = new Image(url, 80, 80, true, true);
+            if (!image.isError()) {
+                imagenPreview.setImage(image);
                 imagenPreview.setVisible(true);
-                imagenLabel.setVisible(false);
-            } catch (IOException e) {
-                mostrarAlerta("Error", "No se pudo cargar la imagen.", Alert.AlertType.ERROR);
+            } else {
+                imagenPreview.setImage(null);
+                imagenPreview.setVisible(false);
+                mostrarAlerta("Advertencia", "No se pudo cargar la imagen desde esa URL.", Alert.AlertType.WARNING);
             }
+        } catch (Exception e) {
+            imagenPreview.setImage(null);
+            imagenPreview.setVisible(false);
+            mostrarAlerta("Error", "URL de imagen no valida.", Alert.AlertType.ERROR);
         }
     }
 
@@ -351,10 +343,9 @@ public class AdminController {
         stockField.clear();
         descripcionArea.clear();
         categoriaCombo.getSelectionModel().clearSelection();
-        imagenSeleccionadaPath = null;
+        imagenUrlField.clear();
         imagenPreview.setImage(null);
         imagenPreview.setVisible(false);
-        imagenLabel.setVisible(true);
         formTitle.setText("Editar Producto");
         registrarBtn.setText("Actualizar Producto");
         registrarBtn.setDisable(true);

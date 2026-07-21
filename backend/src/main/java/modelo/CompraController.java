@@ -39,6 +39,7 @@ public class CompraController {
     @FXML private TableColumn<LineaFactura, Integer> colCant;
     @FXML private TableColumn<LineaFactura, Double> colPrecio;
     @FXML private TableColumn<LineaFactura, Double> colSubtotal;
+    @FXML private TableColumn<LineaFactura, Void> colEliminar;
     @FXML private Label totalLabel;
     @FXML private Button registrarCompraBtn;
 
@@ -55,6 +56,26 @@ public class CompraController {
         colCant.setCellValueFactory(data -> data.getValue().cantidadProperty().asObject());
         colPrecio.setCellValueFactory(data -> data.getValue().precioProperty().asObject());
         colSubtotal.setCellValueFactory(data -> data.getValue().subtotalProperty().asObject());
+
+        colEliminar.setCellFactory(param -> new TableCell<>() {
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableView().getItems().get(getIndex()) == null) {
+                    setGraphic(null);
+                } else {
+                    Button btn = new Button("X");
+                    btn.setStyle("-fx-background-color: #ff6b6b; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4px; -fx-cursor: hand; -fx-font-size: 11px;");
+                    btn.setPrefSize(36, 22);
+                    btn.setOnAction(e -> {
+                        LineaFactura itemToRemove = getTableView().getItems().get(getIndex());
+                        facturaItems.remove(itemToRemove);
+                        actualizarTotal();
+                    });
+                    setGraphic(btn);
+                }
+            }
+        });
 
         facturaTable.setItems(facturaItems);
 

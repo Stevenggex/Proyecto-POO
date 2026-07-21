@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class UsuarioDAO implements CrudOperaciones<Usuario> {
 
-    private static final String COLECCION = "Usuarios";
+    private static final String COLECCION = "Usuario";
 
     private Firestore getDb() {
         return FirebaseConfig.getDb();

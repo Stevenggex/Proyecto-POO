@@ -13,7 +13,7 @@ public class FirebaseConfig {
     private static Firestore db;
 
     public static void initFirebase() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("src/main/resources/tienda-de-videojuegos-23b12-firebase-adminsdk-fbsvc-5e7d7881e6.json");
+        FileInputStream serviceAccount = new FileInputStream("src/main/resources/tienda-de-videojuegos-23b12-firebase-adminsdk-fbsvc-01815cb77c.json");
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))

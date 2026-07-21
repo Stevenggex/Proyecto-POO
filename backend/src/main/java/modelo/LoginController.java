@@ -67,7 +67,7 @@ public class LoginController {
             Scene dashboardScene = new Scene(loader.load(), 1280, 768);
             Stage stage = (Stage) loginButton.getScene().getWindow();
             stage.setScene(dashboardScene);
-            stage.setTitle("QuestLog - " + rol);
+            stage.setTitle("Modulo - " + rol);
             stage.setResizable(true);
             stage.show();
         } catch (IOException e) {

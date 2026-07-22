@@ -1,4 +1,4 @@
-# Proyecto POO - QuestLog: Tienda de Videojuegos
+# Proyecto POO - GAME-VAULT: Tienda de Videojuegos
 
 Proyecto final de la materia de Programación Orientada a Objetos (POO).
 

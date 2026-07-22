@@ -1,0 +1,599 @@
+================================================================================
+                    GAMEVAULT - TIENDA DE VIDEOJUEGOS
+                     MANUAL DE USUARIO v1.0
+================================================================================
+         Proyecto Final - Programacion Orientada a Objetos
+         Autores: Steven Gallo & Nicolay Barreno
+================================================================================
+
+
+ indice
+ ======
+  1.  Descripcion General del Sistema
+  2.  Requisitos del Sistema
+  3.  Como Ejecutar la Aplicacion
+  4.  Inicio de Sesion
+  5.  Roles y Permisos
+  6.  Modulo de Administrador
+  7.  Modulo de Empleado
+  8.  Modulo de Usuario (Compras)
+  9.  Sitio Web GAMEVAULT
+ 10.  Base de Datos
+ 11.  Solucion de Problemas
+
+
+================================================================================
+ 1. DESCRIPCION GENERAL DEL SISTEMA
+================================================================================
+
+ GAMEVAULT es un sistema de gestion para una tienda de videojuegos que
+ permite administrar un catalogo de productos, gestionar usuarios con
+ diferentes roles y realizar compras de videojuegos.
+
+ El sistema cuenta con dos componentes principales:
+
+   - Aplicacion de Escritorio (JavaFX): Panel de administracion con
+     tres modulos segun el rol del usuario (Administrador, Empleado,
+     Usuario/Cliente).
+
+   - Sitio Web (React): Catalogo publico en linea con visualizacion
+     en tiempo real de los videojuegos disponibles.
+
+
+================================================================================
+ 2. REQUISITOS DEL SISTEMA
+================================================================================
+
+ Aplicacion de Escritorio:
+   - Sistema Operativo: Windows 10/11
+   - Java 21 (JDK) o superior
+   - Maven (incluido en el proyecto como Maven Wrapper)
+   - Conexion a internet (para conectar con Firebase)
+
+ Sitio Web:
+   - Navegador web actualizado (Chrome, Firefox, Edge, Safari)
+   - Conexion a internet
+
+
+================================================================================
+ 3. COMO EJECUTAR LA APLICACION
+================================================================================
+
+ A) APLICACION DE ESCRITORIO (JavaFX)
+ -------------------------------------
+
+  1. Abra una terminal o consola de comandos.
+
+  2. Navegue hasta la carpeta "backend" del proyecto:
+
+         cd backend
+
+  3. Ejecute el siguiente comando:
+
+         mvnw.cmd clean javafx:run
+
+     Esto compilara el proyecto y abrira la ventana de inicio de sesion.
+
+  4. Si es la primera vez que ejecuta el proyecto, Maven descargara
+     automaticamente todas las dependencias necesarias. Esto puede
+     tardar unos minutos dependiendo de su conexion a internet.
+
+
+ B) SITIO WEB (React)
+ ---------------------
+
+  1. Abra una terminal o consola de comandos.
+
+  2. Navegue hasta la carpeta "diseno-poo" del proyecto:
+
+         cd diseno-poo
+
+  3. Instale las dependencias:
+
+         pnpm install
+
+  4. Ejecute el servidor de desarrollo:
+
+         pnpm dev
+
+  5. Abra su navegador en la direccion:
+
+         http://localhost:8443
+
+
+================================================================================
+ 4. INICIO DE SESION
+================================================================================
+
+ Al abrir la aplicacion de escritorio, se mostrara la pantalla de inicio
+ de sesion con los siguientes campos:
+
+   - Nombre de Usuario: Ingrese su nombre de usuario registrado.
+   - Contrasena: Ingrese su contrasena.
+
+ Pasos:
+   1. Escriba su nombre de usuario en el campo correspondiente.
+   2. Escriba su contrasena en el campo correspondiente.
+   3. Haga clic en el boton "Iniciar Sesion".
+
+   - Si las credenciales son correctas, aparecera un mensaje de
+     bienvenida indicando su rol, y sera redirigido al modulo
+     correspondiente.
+
+   - Si las credenciales son incorrectas, aparecera el mensaje:
+     "Usuario o contrasena incorrectos". Verifique sus datos e
+     intente nuevamente.
+
+ IMPORTANTE: Ambos campos son obligatorios. No es posible iniciar
+ sesion dejando campos vacios.
+
+
+================================================================================
+ 5. ROLES Y PERMISOS
+================================================================================
+
+ El sistema maneja tres roles diferentes:
+
+ +----------------+--------------------------------------------------+
+ | ROL            | PERMISOS                                         |
+ +----------------+--------------------------------------------------+
+ | ADMINISTRADOR  | - Ver inventario de productos                    |
+ |                | - Editar productos existentes                    |
+ |                | - Eliminar productos                             |
+ |                | - NO puede crear productos nuevos                |
+ +----------------+--------------------------------------------------+
+ | EMPLEADO       | - Ver inventario de productos                    |
+ |                | - Crear productos nuevos                         |
+ |                | - Editar productos existentes                    |
+ |                | - Eliminar productos                             |
+ |                | - Buscar productos                               |
+ +----------------+--------------------------------------------------+
+ | USUARIO        | - Ver catalogo de productos                      |
+ |                | - Buscar productos                               |
+ |                | - Agregar productos al carrito                   |
+ |                | - Realizar compras                               |
+ |                | - NO puede modificar productos                   |
+ +----------------+--------------------------------------------------+
+
+ Nota: Al registrarse desde el sitio web, todos los usuarios reciben
+ el rol "Usuario" por defecto.
+
+
+================================================================================
+ 6. MODULO DE ADMINISTRADOR
+================================================================================
+
+ Al iniciar sesion como administrador, se mostrara el panel de
+ administracion con las siguientes opciones:
+
+
+ 6.1 BARRA LATERAL (Menu izquierdo)
+ -----------------------------------
+
+   - Panel: Muestra un mensaje de bienvenida indicando que esta en
+     la vista de administracion.
+
+   - Inventario: Muestra todos los productos registrados en el
+     sistema.
+
+   - Buscar Productos: Activa la barra de busqueda para filtrar
+     productos por nombre.
+
+   - Cerrar Sesion: Cierra la sesion actual y regresa a la pantalla
+     de inicio de sesion.
+
+
+ 6.2 BUSQUEDAD DE PRODUCTOS
+ ---------------------------
+
+   La barra de busqueda permite filtrar productos en tiempo real.
+   Simplemente escriba el nombre o parte del nombre de un videojuego
+   y los resultados se actualizaran automaticamente.
+
+
+ 6.3 EDITAR UN PRODUCTO
+ -----------------------
+
+   1. Haga clic en "Inventario" en la barra lateral para ver todos
+      los productos.
+
+   2. Localice el producto que desea editar.
+
+   3. Haga clic en el boton "Editar" en la tarjeta del producto.
+
+   4. Los datos del producto se cargaran en el formulario de la
+      parte superior.
+
+   5. Modifique los campos que desee cambiar:
+      - Nombre del producto
+      - Precio (USD)
+      - Cantidad en Stock
+      - Categoria (Accion/RPG, Estrategia, Simulador, Terror, Indie)
+      - Descripcion
+      - URL de la imagen
+
+   6. Haga clic en el boton "Actualizar Producto".
+
+   7. El producto se actualizara en la base de datos y la lista
+      se refrescara automaticamente.
+
+
+ 6.4 ELIMINAR UN PRODUCTO
+ -------------------------
+
+   1. Haga clic en "Inventario" en la barra lateral.
+
+   2. Localice el producto que desea eliminar.
+
+   3. Haga clic en el boton "Eliminar" en la tarjeta del producto.
+
+   4. Se mostrara un mensaje de confirmacion. Confirme la accion
+      para eliminar el producto permanentemente.
+
+
+================================================================================
+ 7. MODULO DE EMPLEADO
+================================================================================
+
+ Al iniciar sesion como empleado, se mostrara el panel de gestion con
+ las siguientes opciones:
+
+
+ 7.1 BARRA LATERAL (Menu izquierdo)
+ -----------------------------------
+
+   - Panel: Resetea la vista del panel principal.
+
+   - Inventario: Muestra todos los productos registrados.
+
+   - Anadir Producto: Muestra el formulario para crear un producto
+     nuevo (opcion activa por defecto).
+
+   - Buscar Productos: Activa la barra de busqueda.
+
+   - Cerrar Sesion: Cierra la sesion y regresa al inicio de sesion.
+
+
+ 7.2 REGISTRAR UN PRODUCTO NUEVO
+ --------------------------------
+
+   1. Haga clic en "Anadir Producto" en la barra lateral.
+
+   2. Complete los campos del formulario:
+
+      * Nombre del producto: Nombre del videojuego (obligatorio).
+      * Precio (USD): Precio de venta en dolares (obligatorio).
+      * Cantidad en Stock: Unidades disponibles (obligatorio).
+      * Categoria: Seleccione una opcion del desplegable:
+        - Accion / RPG
+        - Estrategia
+        - Simulador
+        - Terror
+        - Indie
+      * Descripcion Breve: Texto descriptivo del juego (opcional).
+      * URL de la imagen: Enlace web a la imagen de portada.
+
+   3. Para previsualizar la imagen, escriba la URL y presione la
+      tecla Enter.
+
+   4. Haga clic en el boton "Registrar Producto".
+
+   5. El producto se guardara en la base de datos y aparecera en
+      el inventario.
+
+   Nota: Los campos con errores se resaltan con borde rojo. Asegurese
+   de que nombre, precio y stock tengan valores validos.
+
+
+ 7.3 EDITAR UN PRODUCTO
+ -----------------------
+
+   1. Haga clic en "Inventario" para ver los productos.
+
+   2. Haga clic en "Editar" en la tarjeta del producto a modificar.
+
+   3. Modifique los campos deseados en el formulario.
+
+   4. Haga clic en "Actualizar Producto".
+
+
+ 7.4 ELIMINAR UN PRODUCTO
+ -------------------------
+
+   1. Haga clic en "Inventario".
+
+   2. Haga clic en "Eliminar" en la tarjeta del producto.
+
+   3. Confirme la eliminacion en el cuadro de dialogo.
+
+
+ 7.5 BUSCAR PRODUCTOS
+ ---------------------
+
+   1. Haga clic en "Buscar Productos" o escriba directamente en la
+      barra de busqueda ubicada en la parte superior.
+
+   2. Los resultados se filtran en tiempo real a medida que escribe,
+      mostrando solo los productos cuyo nombre coincida con lo
+      escrito.
+
+
+================================================================================
+ 8. MODULO DE USUARIO (COMPRAS)
+================================================================================
+
+ Al iniciar sesion como usuario, se mostrara el modulo de compras con
+ las siguientes opciones:
+
+
+ 8.1 BARRA LATERAL (Menu izquierdo)
+ -----------------------------------
+
+   - Catalogo: Muestra todos los videojuegos disponibles para compra.
+
+   - Mis Compras: Funcionalidad proximamente (actualmente muestra un
+     mensaje indicando que no hay compras registradas).
+
+   - Cerrar Sesion: Cierra la sesion y regresa al inicio de sesion.
+
+
+ 8.2 VER EL CATALOGO
+ --------------------
+
+   Al acceder al modulo, se carga automaticamente el catalogo
+   completo de videojuegos. Cada tarjeta muestra:
+
+   - Imagen de portada del juego
+   - Nombre del videojuego
+   - Precio en USD
+   - Estado de stock (Disponible / Agotado)
+
+
+ 8.3 AGREGAR PRODUCTOS AL CARRITO
+ ---------------------------------
+
+   1. Localice el videojuego que desea comprar en el catalogo.
+
+   2. Haga clic en el boton "+ Agregar" en la tarjeta del juego.
+
+   3. El juego se agregara a la tabla de factura en el panel
+      derecho de la pantalla.
+
+   4. Si agrega el mismo juego nuevamente, la cantidad se
+      incrementara automaticamente en 1.
+
+   5. Puede buscar productos especificos usando la barra de
+      busqueda en la parte superior.
+
+   Nota: El boton "+ Agregar" estara deshabilitado para juegos
+   sin stock (cantidad = 0).
+
+
+ 8.4 MODIFICAR EL CARRITO
+ -------------------------
+
+   - Para eliminar un producto del carrito, haga clic en el boton
+     "X" que aparece en la columna de la tabla de factura.
+
+   - El total se actualiza automaticamente al modificar cantidades
+     o eliminar productos.
+
+
+ 8.5 LLENAR DATOS DEL CLIENTE
+ -----------------------------
+
+   Antes de confirmar la compra, debe completar sus datos en el
+   panel derecho:
+
+   - Nombre Completo: Su nombre y apellido (obligatorio).
+   - Direccion: Direccion de envio o recogida (obligatorio).
+   - Correo Electronico: Su direccion de correo (obligatorio).
+   - Telefono: Numero de contacto (obligatorio).
+   - Metodo de Pago: Seleccione una opcion:
+     * Efectivo
+     * Tarjeta de Credito
+     * Tarjeta de Debito
+     * Transferencia
+
+
+ 8.6 CONFIRMAR LA COMPRA
+ -------------------------
+
+   1. Verifique que la factura contenga al menos un producto.
+
+   2. Verifique que todos los campos del cliente esten completos.
+
+   3. Haga clic en el boton "Registrar Compra".
+
+   4. Se mostrara un cuadro de confirmacion. Confirme para
+      procesar la compra.
+
+   5. La factura se generara y se guardara automaticamente en el
+      archivo "Compras.txt".
+
+   6. El formulario se limpiara y podra realizar una nueva compra.
+
+
+ 8.7 ESTRUCTURA DE LA FACTURA
+ -----------------------------
+
+   La factura generada contiene:
+
+   +-------------------------------------------+
+   | GAMEVAULT - FACTURA DE COMPRA             |
+   +-------------------------------------------+
+   | Fecha: [Fecha y hora de la compra]        |
+   | Cliente: [Nombre completo]                |
+   | Direccion: [Direccion]                    |
+   | Correo: [Correo electronico]              |
+   | Telefono: [Telefono]                      |
+   | Metodo de pago: [Metodo seleccionado]     |
+   +-------------------------------------------+
+   | PRODUCTO       | CANT. | PRECIO | SUBTOTAL|
+   +-------------------------------------------+
+   | [Nombre juego] | [Qty] | [USD]  | [USD]   |
+   | ...            | ...   | ...    | ...     |
+   +-------------------------------------------+
+   |                    TOTAL: [USD]           |
+   +-------------------------------------------+
+
+
+================================================================================
+ 9. SITIO WEB GAMEVAULT
+================================================================================
+
+ El sitio web es un catalogo publico de los videojuegos disponibles en
+ la tienda. Es de solo lectura: no permite crear, editar ni eliminar
+ productos.
+
+
+ 9.1 NAVEGACION
+ ---------------
+
+   La barra de navegacion superior incluye:
+
+   - Logo GAMEVAULT: Vuelve al inicio del sitio.
+   - Inicio: Muestra la pagina principal.
+   - Catalogo: Seccion de visualizacion de juegos.
+   - Generos: Filtrado por genero.
+   - Plataformas: Filtrado por plataforma.
+   - Barra de Busqueda: Busqueda por nombre de juego.
+   - Registro: Abre el formulario de login/registro.
+
+
+ 9.2 HERO BANNER (Juego Destacado)
+ -----------------------------------
+
+   En la parte principal se muestra el juego destacado con:
+
+   - Imagen de portada grande
+   - Nombre del juego
+   - Nombre del desarrollador
+   - Descripcion del juego
+   - Calificacion con estrellas
+   - Precio en USD
+
+
+ 9.3 FILTROS
+ ------------
+
+   Puede filtrar los juegos usando las siguientes opciones:
+
+   Por Genero:
+   - Todos
+   - Accion/RPG
+   - Estrategia
+   - Simulador
+   - Terror
+   - Indie
+
+   Por Ordenamiento:
+   - Mejor valorados
+   - Precio: menor a mayor
+   - Precio: mayor a menor
+   - Titulo: A-Z
+
+
+ 9.4 TARJETAS DE JUEGOS
+ ------------------------
+
+   Cada juego se muestra como una tarjeta con:
+
+   - Imagen de portada (efecto hover al pasar el mouse)
+   - Badge de genero
+   - Badge de stock (En stock / Agotado)
+   - Calificacion con estrellas
+   - Nombre del juego
+   - Desarrollador
+   - Precio
+   - Fecha de lanzamiento
+
+
+ 9.5 INICIAR SESION DESDE LA WEB
+ ---------------------------------
+
+   1. Haga clic en "Registro" en la barra de navegacion.
+
+   2. Se abrira un modal con dos pestanas: Login y Registro.
+
+   3. En la pestana Login:
+      - Ingrese su nombre de usuario.
+      - Ingrese su contrasena.
+      - Haga clic en "Iniciar Sesion".
+
+   4. Si es nuevo usuario, vaya a la pestana Registro:
+      - Ingrese un nombre de usuario.
+      - Ingrese una contrasena.
+      - Haga clic en "Registrarse".
+      - Su cuenta se creara automaticamente con el rol "Usuario".
+
+   Nota: Las cuentas creadas desde la web son compatibles con el
+   login de la aplicacion de escritorio.
+
+
+================================================================================
+ 10. BASE DE DATOS
+================================================================================
+
+ El sistema utiliza Firebase Firestore como base de datos principal.
+
+ Colecciones principales:
+
+   - videojuegos: Almacena todos los productos de la tienda con
+     informacion como nombre, precio, stock, categoria, imagen, etc.
+
+   - Usuario: Almacena los usuarios del sistema con campos de
+     nombre, usuario, contrasena y rol.
+
+ Los datos se sincronizan en tiempo real entre la aplicacion de
+ escritorio y el sitio web.
+
+
+================================================================================
+ 11. SOLUCION DE PROBLEMAS
+================================================================================
+
+ PROBLEMA: La aplicacion no se abre despues de ejecutar el comando.
+   SOLUCION: Verifique que Java 21 este instalado ejecutando:
+             java -version
+             Si tiene otra version, actualice a Java 21.
+
+ PROBLEMA: Error de conexion con Firebase.
+   SOLUCION: Verifique su conexion a internet. El sistema necesita
+             conexion para comunicarse con Firestore.
+
+ PROBLEMA: Las imagenes no se muestran en las tarjetas.
+   SOLUCION: Verifique que la URL de la imagen sea valida y accesible.
+             Pruebe abrir la URL directamente en su navegador.
+
+ PROBLEMA: "Usuario o contrasena incorrectos" pero estoy seguro de
+           que los datos son correctos.
+   SOLUCION: Verifique que no haya espacios al inicio o final de los
+             campos. Las mayusculas y minusculas si importan en el
+             nombre de usuario.
+
+ PROBLEMA: El boton "Agregar" esta deshabilitado en el modulo de
+           compras.
+   SOLUCION: Este juego esta sin stock (cantidad = 0). No es posible
+             agregarlo al carrito hasta que un empleado o admin
+             actualice el stock.
+
+ PROBLEMA: El sitio web no muestra los juegos.
+   SOLUCION: Verifique que el servidor de desarrollo este corriendo
+             y que tenga conexion a internet para acceder a Firestore.
+
+ PROBLEMA: Error al ejecutar mvnw.cmd en Windows.
+   SOLUCION: Asegurese de estar en la carpeta "backend" del proyecto
+             y de tener permisos de ejecucion en PowerShell:
+
+
+                  Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+
+
+================================================================================
+                     FIN DEL MANUAL DE USUARIO
+================================================================================
+       GAMEVAULT - Sistema de Gestion de Tienda de Videojuegos
+           Proyecto Final - Programacion Orientada a Objetos
+                    Steven Gallo & Nicolay Barreno
+================================================================================
